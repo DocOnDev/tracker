@@ -1,0 +1,4 @@
+pivotal-tracker/*
+*.swp
+*.swo
+*.lock
