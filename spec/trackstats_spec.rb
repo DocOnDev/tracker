@@ -1,28 +1,41 @@
 require 'trackstats'
 
-describe 'TrackStats' do
+describe TrackStats do
     let(:trackstats) { TrackStats.new }
 
-    context 'for a defined set of stories' do
-        before(:each) do
-            fake_stories = Array.new(4)
-            fake_stories[0] = PivotalTracker::Story.new(:current_state => :accepted)
-            fake_stories[1] = PivotalTracker::Story.new(:current_state => :finished)
-            fake_stories[2] = PivotalTracker::Story.new(:current_state => :finished)
-            fake_stories[3] = PivotalTracker::Story.new(:current_state => :unstarted)
-            trackstats.stories = fake_stories
+    before(:each) do
+        strs = Array.new(4)
+        strs[0] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "accepted")
+        strs[1] = PivotalTracker::Story.new(:current_state => "finished")
+        strs[2] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "finished")
+        strs[3] = PivotalTracker::Story.new(:current_state => "unstarted")
+
+        prj = mock(PivotalTracker::Project)
+        prj.stub_chain(:stories, :all).and_return(strs)
+        trackstats.project = prj
+    end
+
+    context 'not filtering' do
+        it 'returns all stories by default' do
+            trackstats.count.should == 4
+        end
+    end
+
+    context 'filtering by state' do
+        it 'returns all stories for :all' do
+            trackstats.state(:all).count.should == 4
         end
 
-        it 'returns all stories' do
-            trackstats.stories(:all).count.should == 4
+        it 'can filter for a specific state' do
+            trackstats.state(:accepted).count.should == 1
         end
 
-        it 'returns accepted stories' do
-            trackstats.stories(:accepted).count.should == 1
+        it 'can filter for other specific states' do
+            trackstats.state(:finished).count.should == 2
         end
 
-        it 'returns finished stories' do
-            trackstats.stories(:finished).count.should == 2
+        it 'can filter for multiple states' do
+            trackstats.state([:accepted, :unstarted]).count.should == 2
         end
     end
 end

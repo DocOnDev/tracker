@@ -5,9 +5,9 @@ class TrackStats
     DEFAULT_PROJECT_ID = 52897
 
     def initialize
-        @project_id = DEFAULT_PROJECT_ID
         PivotalTracker::Client.token = USER_TOKEN
         PivotalTracker::Client.use_ssl = true
+        @story_state = :all
     end
 
     def stories=(stories)
@@ -15,28 +15,20 @@ class TrackStats
     end
 
     def project=(project)
-        if project.is_a?(PivotalTracker::Project)
-            @project = project
-        else
-            @project_id = project
-            @project = nil
-        end
+        @project = project
         @stories = nil
     end
-
-    def stories(scope)
-        get_stories if !@stories
-        return @stories if scope == :all
-        @stories.find_all{|story| story.current_state == scope}
+    
+    def count
+        @project ||= PivotalTracker::Project.find(@project_id ||= DEFAULT_PROJECT_ID)
+        filtered_stories = @stories ||= @project.stories.all
+        filtered_stories = @stories.find_all{|story| @story_state.to_s.include? story.current_state} unless @story_state == :all
+        filtered_stories.count
     end
 
-    private
-
-    def get_stories
-        if !@project
-            @project_id |= DEFAULT_PROJECT_ID
-            @project = PivotalTracker::Project.find(@project_id)
-        end
-        @stories = @project.stories.all
+    def state(story_state)
+        # states: unscheduled, unstarted, started, finished, delivered, accepted, or rejected.
+        @story_state = story_state
+        self
     end
 end
