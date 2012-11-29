@@ -6,8 +6,9 @@ end
 
 def hit_live
     trackstats = TrackStats.new
-    report_stories(trackstats.label(:heartx), "HeartX")
-    report_stories(trackstats.state(:delivered), "Delivered")
-    report_stories(trackstats.state(:finished), "Finished")
-    report_stories(trackstats.type(:bug).state(:accepted), "accepted")
+    report_stories(trackstats.state(:accepted).label(:heartx), "Accepted")
+    report_stories(trackstats.state(:delivered).label(:heartx), "Delivered")
+    report_stories(trackstats.state(:finished).label(:heartx), "Finished")
+    report_stories(trackstats.state(:started).label(:heartx), "Started")
+    report_stories(trackstats.state(:unstarted).label(:heartx), "Backlog")
 end

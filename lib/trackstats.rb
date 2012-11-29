@@ -46,21 +46,25 @@ class TrackStats
   end
 
   private
-  def filter_matches_attribute?(filter_criteria, attributes)
+  def should_keep?(filter_criteria, attributes)
     return true if !filter_criteria
     return false if !attributes
     filter_criteria.map!{|l_in| l_in.downcase.to_s}
     attributes = attributes.downcase.split(",")
-    (filter_criteria & attributes).length > 0
+    share_an_element?(filter_criteria, attributes)
+  end
+
+  def share_an_element?(_a1, _a2)
+    (_a1 & _a2).length > 0
   end
 
   def filter_stories
     @project ||= PivotalTracker::Project.find(@project_id ||= DEFAULT_PROJECT_ID)
     @stories ||= @project.stories.all
     filtered_stories = @stories.clone
-    filtered_stories.keep_if{|story| filter_matches_attribute?(@criteria[:state], story.current_state)}
-    filtered_stories.keep_if{|story| filter_matches_attribute?(@criteria[:label], story.labels)}
-    filtered_stories.keep_if{|story| filter_matches_attribute?(@criteria[:type], story.story_type)}
+    filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
+    filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
+    filtered_stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
     @criteria = {}
     filtered_stories
   end
