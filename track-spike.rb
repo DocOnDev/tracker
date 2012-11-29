@@ -1,13 +1,13 @@
 load 'lib/trackstats.rb'
 
 def report_stories(stories, label)
-    p "There are " + stories.length.to_s + " " + label + " stories worth " + stories.reduce(0){|points, story| points + (story.estimate || 0)}.to_s + " points"
+    p "There are " + stories.count.to_s + " " + label + " stories worth " + stories.points.to_s + " points."
 end
 
 def hit_live
     trackstats = TrackStats.new
-    report_stories(trackstats.stories(:all), "")
-    report_stories(trackstats.stories(:started), "started")
-    report_stories(trackstats.stories(:delivered), "delivered")
-    report_stories(trackstats.stories(:accepted), "accepted")
+    report_stories(trackstats.label(:heartx), "HeartX")
+    report_stories(trackstats.state(:delivered), "Delivered")
+    report_stories(trackstats.state(:finished), "Finished")
+    report_stories(trackstats.type(:bug).state(:accepted), "accepted")
 end

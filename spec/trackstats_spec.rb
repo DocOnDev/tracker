@@ -1,41 +1,82 @@
 require 'trackstats'
 
 describe TrackStats do
-    let(:trackstats) { TrackStats.new }
+  let(:trackstats) { TrackStats.new }
 
-    before(:each) do
-        strs = Array.new(4)
-        strs[0] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "accepted")
-        strs[1] = PivotalTracker::Story.new(:current_state => "finished")
-        strs[2] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "finished")
-        strs[3] = PivotalTracker::Story.new(:current_state => "unstarted")
+  before(:each) do
+    strs = Array.new(4)
+    strs[0] = PivotalTracker::Story.new(:labels => "pwa,heartX", :current_state => "accepted", :story_type => "Feature", :estimate => 5)
+    strs[1] = PivotalTracker::Story.new(:labels => nil, :current_state => "finished", :story_type => "Bug", :estimate => 3)
+    strs[2] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "finished", :story_type => "Feature", :estimate => 3)
+    strs[3] = PivotalTracker::Story.new(:labels => "blocked", :current_state => "unstarted", :story_type => "Release", :estimate => 3)
 
-        prj = mock(PivotalTracker::Project)
-        prj.stub_chain(:stories, :all).and_return(strs)
-        trackstats.project = prj
+    prj = mock(PivotalTracker::Project)
+    prj.stub_chain(:stories, :all).and_return(strs)
+    trackstats.project = prj
+  end
+
+  context 'not filtering' do
+    it 'returns all stories by default' do
+      trackstats.count.should == 4
+    end
+  end
+
+  context 'filtering by state' do
+    it 'can filter for a specific state' do
+      trackstats.state(:accepted).count.should == 1
     end
 
-    context 'not filtering' do
-        it 'returns all stories by default' do
-            trackstats.count.should == 4
-        end
+    it 'can filter for other specific states' do
+      trackstats.state(:finished).count.should == 2
     end
 
-    context 'filtering by state' do
-        it 'returns all stories for :all' do
-            trackstats.state(:all).count.should == 4
-        end
-
-        it 'can filter for a specific state' do
-            trackstats.state(:accepted).count.should == 1
-        end
-
-        it 'can filter for other specific states' do
-            trackstats.state(:finished).count.should == 2
-        end
-
-        it 'can filter for multiple states' do
-            trackstats.state([:accepted, :unstarted]).count.should == 2
-        end
+    it 'can filter for multiple states' do
+      trackstats.state([:accepted, :unstarted]).count.should == 2
     end
+  end
+
+  context 'filtering by label' do
+    it 'can filter for a specific label' do
+      trackstats.label(:heartX).count.should == 2
+    end
+
+    it 'can filter for multiple labels' do
+      trackstats.label([:heartX, :blocked]).count.should == 3
+    end
+  end
+
+  context 'filtering by type' do
+    it 'can filter for a specific type' do
+      trackstats.type(:feature).count.should == 2
+    end
+
+    it 'can filter for multiple types' do
+      trackstats.type([:feature, :bug]).count.should == 3
+    end
+  end
+
+  context 'filtering on multiple criterion' do
+    it 'can filter on two criterion' do
+      trackstats.type(:feature).label(:heartx).count.should == 2
+    end
+
+    it 'can filter on three criterion' do
+      trackstats.type(:feature).label(:heartx).state(:accepted).count.should == 1
+    end
+
+    it 'does not allow call stacking' do
+      trackstats.label(:heartx).count.should == 2
+      trackstats.state(:finished).count.should == 2
+    end
+  end
+
+  context 'totals points' do
+    it 'counts points for filtered stories' do
+      trackstats.type(:feature).label(:heartX).points.should ==8
+    end
+
+    it 'counts points for all the stories' do
+      trackstats.points.should == 14
+    end
+  end
 end
