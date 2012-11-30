@@ -5,10 +5,10 @@ describe TrackStats do
 
   before(:each) do
     strs = Array.new(4)
-    strs[0] = PivotalTracker::Story.new(:labels => "pwa,heartX", :current_state => "accepted", :story_type => "Feature", :estimate => 5)
-    strs[1] = PivotalTracker::Story.new(:labels => nil, :current_state => "finished", :story_type => "Bug", :estimate => 3)
-    strs[2] = PivotalTracker::Story.new(:labels => "heartX", :current_state => "finished", :story_type => "Feature", :estimate => 3)
-    strs[3] = PivotalTracker::Story.new(:labels => "blocked", :current_state => "unstarted", :story_type => "Release", :estimate => 3)
+    strs[0] = PivotalTracker::Story.new(:owned_by => "Bob", :labels => "pwa,heartX", :current_state => "accepted", :story_type => "Feature", :estimate => 5)
+    strs[1] = PivotalTracker::Story.new(:owned_by => "Tom", :labels => nil, :current_state => "finished", :story_type => "Bug", :estimate => 3)
+    strs[2] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "heartX", :current_state => "finished", :story_type => "Feature", :estimate => 3)
+    strs[3] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "blocked", :current_state => "unstarted", :story_type => "Release", :estimate => 3)
 
     prj = mock(PivotalTracker::Project)
     prj.stub_chain(:stories, :all).and_return(strs)
@@ -31,7 +31,11 @@ describe TrackStats do
     end
 
     it 'can filter for multiple states' do
-      trackstats.state([:accepted, :unstarted]).count.should == 2
+      trackstats.state([:accepted, :backlog]).count.should == 2
+    end
+
+    it 'can filter for wip (started, finished, or delivered)' do
+      trackstats.state(:wip).count.should == 2
     end
   end
 
@@ -77,6 +81,12 @@ describe TrackStats do
 
     it 'counts points for all the stories' do
       trackstats.points.should == 14
+    end
+  end
+
+  context 'filters by owner' do
+    it 'returns stories owned by a specific person' do
+      trackstats.owner("Bob").count.should == 1
     end
   end
 end

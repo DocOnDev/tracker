@@ -4,11 +4,27 @@ class TrackStats
   USER_TOKEN = '8b2ba20d2a1b4d4309a4868d62f53e7a'
   DEFAULT_PROJECT_ID = 52897
 
-  def initialize
+  STATES = {
+    :unscheduled => "unscheduled",
+    :icebox => "unscheduled",
+    :unstarted => "unstarted",
+    :backlog => "unstarted",
+    :started => "started",
+    :finished => "finished",
+    :delivered => "delivered",
+    :accepted => "accepted",
+    :done => "accepted",
+    :rejected => "rejected",
+    :wip => ["started", "finished", "delivered"]
+  }
+
+  def initialize(project=DEFAULT_PROJECT_ID)
     PivotalTracker::Client.token = USER_TOKEN
     PivotalTracker::Client.use_ssl = true
+    self.project = project
     @label = nil
     @criteria = {}
+    @fetched = false
   end
 
   def stories=(stories)
@@ -16,7 +32,12 @@ class TrackStats
   end
 
   def project=(project)
-    @project = project
+    if project.is_a?(Integer)
+      @project_id = project
+      @project = nil
+    else
+      @project = project
+    end
     @stories = nil
   end
 
@@ -29,11 +50,23 @@ class TrackStats
   end
 
   def record_criteria(type, value)
-    @criteria[type] = [value].flatten
+    @criteria = {} if @fetched
+    @fetched = false
+    @criteria[type] = [value].flatten if value
     self
   end
 
+  def owner(story_owner)
+    record_criteria(:owner, story_owner)
+  end
+
   def state(story_state)
+    if story_state.is_a?(Array)
+      story_state.map!{ |state| STATES[state] }
+    else
+      story_state = STATES[story_state]
+    end
+    p story_state
     record_criteria(:state, story_state)
   end
 
@@ -59,13 +92,14 @@ class TrackStats
   end
 
   def filter_stories
-    @project ||= PivotalTracker::Project.find(@project_id ||= DEFAULT_PROJECT_ID)
+    @project ||= PivotalTracker::Project.find(@project_id)
     @stories ||= @project.stories.all
     filtered_stories = @stories.clone
+    filtered_stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
-    @criteria = {}
+    @fetched = true
     filtered_stories
   end
 end
