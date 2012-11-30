@@ -66,7 +66,6 @@ class TrackStats
     else
       story_state = STATES[story_state]
     end
-    p story_state
     record_criteria(:state, story_state)
   end
 

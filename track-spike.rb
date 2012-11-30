@@ -24,12 +24,13 @@ def hit_live project_id, label, owners
   report_stories(@trackstats.state(:delivered).label(label), "Delivered")
   report_stories(@trackstats.state(:finished).label(label), "Finished")
   report_stories(@trackstats.state(:started).label(label), "Started")
-  report_stories(@trackstats.state(:unstarted).label(label), "Backlog")
-  report_stories(@trackstats.state(:unscheduled).label(label), "Icebox")
+  report_stories(@trackstats.state(:backlog).label(label), "Backlog")
+  report_stories(@trackstats.state(:icebox).label(label), "Icebox")
   report_stories(@trackstats.type(:bug).label(label), "Defects")
   report_stories(@trackstats.type(:Chore).label(label), "Chores")
+  report_stories(@trackstats.state(:wip).label(label), "Total WIP")
 
   owners.each do |owner|
-    report_stories(@trackstats.state([:started,:finished,:delivered]).owner(owner).label(label), owner)
+    report_stories(@trackstats.state([:wip]).owner(owner).label(label), owner)
   end
 end
