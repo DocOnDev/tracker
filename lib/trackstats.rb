@@ -18,6 +18,13 @@ class TrackStats
     :wip => ["started", "finished", "delivered"]
   }
 
+  ITERATIONS = {
+    :backlog => ["backlog", nil],
+    :current => ["current",nil],
+    :prior => ["done", {:offset => -1}],
+    :next => [nil, {:offset => 1, :limit => 1}]
+  }
+
   def initialize(project=DEFAULT_PROJECT_ID)
     PivotalTracker::Client.token = USER_TOKEN
     PivotalTracker::Client.use_ssl = true
@@ -29,6 +36,10 @@ class TrackStats
 
   def stories=(stories)
     @stories = stories
+  end
+
+  def iteration=(iteration)
+    @iteration = iteration
   end
 
   def project=(project)
@@ -77,6 +88,11 @@ class TrackStats
     record_criteria(:label, story_label)
   end
 
+  def iteration(iteration_key)
+    @iter_criteria = ITERATIONS[iteration_key]
+    self
+  end
+
   private
   def should_keep?(filter_criteria, attributes)
     return true if !filter_criteria
@@ -92,7 +108,17 @@ class TrackStats
 
   def filter_stories
     @project ||= PivotalTracker::Project.find(@project_id)
-    @stories ||= @project.stories.all
+    if @iter_criteria
+      iter = @iteration ||= PivotalTracker::Iteration
+      filter_iter = iter.method(@iter_criteria[0])
+      if @iter_criteria[1]
+        @stories ||= filter_iter.call(@project, @iter_criteria[1]).stories
+      else
+        @stories ||= filter_iter.call(@project).stories
+      end
+    else
+      @stories ||= @project.stories.all
+    end
     filtered_stories = @stories.clone
     filtered_stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}

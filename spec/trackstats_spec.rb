@@ -12,7 +12,13 @@ describe TrackStats do
 
     prj = mock(PivotalTracker::Project)
     prj.stub_chain(:stories, :all).and_return(strs)
+    prj.stub_chain(:id).and_return(52897)
     trackstats.project = prj
+
+    iter = mock(PivotalTracker::Iteration)
+    iter.stub_chain(:current, :stories).and_return(strs[0..1])
+    iter.stub_chain("done", :stories).and_return([strs[2]])
+    trackstats.iteration = iter
   end
 
   context 'not filtering' do
@@ -87,6 +93,15 @@ describe TrackStats do
   context 'filters by owner' do
     it 'returns stories owned by a specific person' do
       trackstats.owner("Bob").count.should == 1
+    end
+  end
+
+  context 'filtering by iteration' do
+    it 'can filter for current iteration' do
+      trackstats.iteration(:current).count.should == 2
+    end
+    it 'can filter for prior iteration' do
+      trackstats.iteration(:prior).count.should == 1
     end
   end
 end
