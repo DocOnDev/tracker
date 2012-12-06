@@ -104,4 +104,19 @@ describe TrackStats do
       trackstats.iteration(:prior).count.should == 1
     end
   end
+
+  context 'calculates velocity' do
+    it 'calculates velocity for a prior iteration' do
+      trackstats.iteration(:prior).velocity.should == 0
+    end
+
+    it 'calculates velocity for the current iteration' do
+      trackstats.iteration(:current).velocity.should == 5
+    end
+
+    it 'reports 0 velocity for stories not accepted' do
+      trackstats.state(:wip).iteration(:current).velocity.should == 0
+    end
+  end
+
 end

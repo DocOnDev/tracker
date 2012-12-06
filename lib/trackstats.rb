@@ -56,6 +56,16 @@ class TrackStats
     filter_stories.inject(0){|sum, story| sum += [0,(story.estimate || 0)].max}
   end
 
+  def velocity
+    velocity = 0
+    if accepted_possible?
+      current_criteria = @criteria.clone
+      velocity = self.state(:accepted).points
+      @criteria = current_criteria
+    end
+    return velocity
+  end
+
   def count
     filter_stories.count
   end
@@ -104,6 +114,12 @@ class TrackStats
 
   def share_an_element?(_a1, _a2)
     (_a1 & _a2).length > 0
+  end
+
+  def accepted_possible?
+    state_criteria = @criteria[:state]
+    return true if (!state_criteria)
+    share_an_element?(state_criteria, [STATES[:accepted]].flatten)
   end
 
   def filter_stories
