@@ -35,12 +35,10 @@ class TrackStats
 
   def stories=(stories)
     @stories = stories
-    @fetched = true
   end
 
   def iteration=(iteration)
     @iteration = iteration
-    @fetched = false
   end
 
   def project=(project)
@@ -49,7 +47,6 @@ class TrackStats
     else
       @project = project
     end
-    @fetched = false
   end
 
   def points
@@ -93,8 +90,6 @@ class TrackStats
 
   private
   def record_criteria(type, value)
-    @criteria = {} if @fetched
-    @fetched = false
     @criteria[type] = [value].flatten if value
     self
   end
@@ -112,13 +107,12 @@ class TrackStats
   end
 
   def accepted_possible?
-    return true if @fetched
     state_criteria = @criteria[:state]
     return true if (!state_criteria)
     share_an_element?(state_criteria, [STATES[:accepted]].flatten)
   end
 
-  def get_iteration_stories(iter_criteria)
+  def fetch_iteration_stories(iter_criteria)
       iter = @iteration ||= PivotalTracker::Iteration
       filter_iter = iter.method(iter_criteria[0])
       if iter_criteria[1]
@@ -130,7 +124,7 @@ class TrackStats
 
   def filter_stories
     if @criteria[:iteration]
-      @stories ||= get_iteration_stories(@criteria[:iteration])
+      @stories ||= fetch_iteration_stories(@criteria[:iteration])
     else
       @stories ||= @project.stories.all
     end
@@ -139,7 +133,7 @@ class TrackStats
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
-    @fetched = true
+    @criteria = {}
     filtered_stories
   end
 end
