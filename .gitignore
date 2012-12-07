@@ -2,3 +2,4 @@ pivotal-tracker/*
 *.swp
 *.swo
 *.lock
+.DS_STORE
