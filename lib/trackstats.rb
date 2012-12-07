@@ -31,26 +31,25 @@ class TrackStats
     self.project = project
     @label = nil
     @criteria = {}
-    @fetched = false
   end
 
   def stories=(stories)
     @stories = stories
+    @fetched = true
   end
 
   def iteration=(iteration)
     @iteration = iteration
+    @fetched = false
   end
 
   def project=(project)
     if project.is_a?(Integer)
-      @project_id = project
-      @project = nil
+      @project = PivotalTracker::Project.find(project)
     else
       @project = project
     end
-    @stories = nil
-    @iter_criteria = nil
+    @fetched = false
   end
 
   def points
@@ -122,7 +121,6 @@ class TrackStats
   end
 
   def filter_stories
-    @project ||= PivotalTracker::Project.find(@project_id)
     if @iter_criteria
       iter = @iteration ||= PivotalTracker::Iteration
       filter_iter = iter.method(@iter_criteria[0])
