@@ -70,13 +70,6 @@ class TrackStats
     filter_stories.count
   end
 
-  def record_criteria(type, value)
-    @criteria = {} if @fetched
-    @fetched = false
-    @criteria[type] = [value].flatten if value
-    self
-  end
-
   def owner(story_owner)
     record_criteria(:owner, story_owner)
   end
@@ -101,6 +94,13 @@ class TrackStats
   end
 
   private
+  def record_criteria(type, value)
+    @criteria = {} if @fetched
+    @fetched = false
+    @criteria[type] = [value].flatten if value
+    self
+  end
+
   def should_keep?(filter_criteria, attributes)
     return true if !filter_criteria
     return false if !attributes
