@@ -88,9 +88,7 @@ class TrackStats
   end
 
   def iteration(iteration_key)
-    @iter_criteria = ITERATIONS[iteration_key]
-    @fetched = false
-    self
+    record_criteria(:iteration, ITERATIONS[iteration_key])
   end
 
   private
@@ -120,15 +118,19 @@ class TrackStats
     share_an_element?(state_criteria, [STATES[:accepted]].flatten)
   end
 
-  def filter_stories
-    if @iter_criteria
+  def get_iteration_stories(iter_criteria)
       iter = @iteration ||= PivotalTracker::Iteration
-      filter_iter = iter.method(@iter_criteria[0])
-      if @iter_criteria[1]
-        @stories = filter_iter.call(@project, @iter_criteria[1])[0].stories
+      filter_iter = iter.method(iter_criteria[0])
+      if iter_criteria[1]
+        @stories = filter_iter.call(@project, iter_criteria[1])[0].stories
       else
         @stories = filter_iter.call(@project).stories
       end
+  end
+
+  def filter_stories
+    if @criteria[:iteration]
+      @stories ||= get_iteration_stories(@criteria[:iteration])
     else
       @stories ||= @project.stories.all
     end
