@@ -33,10 +33,6 @@ class TrackStats
     @criteria = {}
   end
 
-  def stories=(stories)
-    @stories = stories
-  end
-
   def iteration=(iteration)
     @iteration = iteration
   end
@@ -90,7 +86,9 @@ class TrackStats
 
   private
   def record_criteria(type, value)
+    @criteria = {} if @filtered
     @criteria[type] = [value].flatten if value
+    @filtered = false
     self
   end
 
@@ -126,9 +124,9 @@ class TrackStats
 
   def filter_stories
     if @criteria[:iteration]
-      @stories ||= fetch_iteration_stories(@criteria[:iteration])
+      @stories = fetch_iteration_stories(@criteria[:iteration])
     else
-      @stories ||= @project.stories.all
+      @stories = @project.stories.all
     end
     filtered_stories = @stories.clone
     # TODO: dry this up - make this into an each
@@ -136,7 +134,7 @@ class TrackStats
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
-    @criteria = {}
+    @filtered = true
     filtered_stories
   end
 end
