@@ -97,7 +97,7 @@ class TrackStats
   def should_keep?(filter_criteria, attributes)
     return true if !filter_criteria
     return false if !attributes
-    filter_criteria.map!{|l_in| l_in.downcase.to_s}
+    filter_criteria.map!{|fc| fc.downcase.to_s}
     attributes = attributes.downcase.split(",")
     share_an_element?(filter_criteria, attributes)
   end
@@ -113,8 +113,10 @@ class TrackStats
   end
 
   def fetch_iteration_stories(iter_criteria)
-      iter = @iteration ||= PivotalTracker::Iteration
-      filter_iter = iter.method(iter_criteria[0])
+      @iteration ||= PivotalTracker::Iteration
+      # TODO: create iteration criteria class to improve readability
+      #           @iteration.method(iteration_criteria.method_name)
+      filter_iter = @iteration.method(iter_criteria[0])
       if iter_criteria[1]
         @stories = filter_iter.call(@project, iter_criteria[1])[0].stories
       else
@@ -129,6 +131,7 @@ class TrackStats
       @stories ||= @project.stories.all
     end
     filtered_stories = @stories.clone
+    # TODO: dry this up - make this into an each
     filtered_stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
