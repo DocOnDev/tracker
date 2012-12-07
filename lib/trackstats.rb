@@ -1,8 +1,8 @@
 require 'pivotal-tracker'
+require 'yaml'
 
 class TrackStats
-  USER_TOKEN = '8b2ba20d2a1b4d4309a4868d62f53e7a'
-  DEFAULT_PROJECT_ID = 52897
+  CONFIG = YAML.load_file("config/config.yml") unless defined? CONFIG
 
   STATES = {
     :unscheduled => "unscheduled",
@@ -25,8 +25,8 @@ class TrackStats
     :next => [nil, {:offset => 1, :limit => 1}]
   }
 
-  def initialize(project=DEFAULT_PROJECT_ID)
-    PivotalTracker::Client.token = USER_TOKEN
+  def initialize(project=CONFIG[:project][:id])
+    PivotalTracker::Client.token = CONFIG[:user][:token]
     PivotalTracker::Client.use_ssl = true
     self.project = project
     @label = nil
