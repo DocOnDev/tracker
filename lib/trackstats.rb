@@ -83,12 +83,8 @@ class TrackStats
   end
 
   def state(story_state)
-    if story_state.is_a?(Array)
-      story_state.map!{ |state| STATES[state] }
-    else
-      story_state = STATES[story_state]
-    end
-    record_criteria(:state, story_state)
+    story_state = [story_state].flatten
+    record_criteria(:state, story_state.map{ |state| STATES[state] })
   end
 
   def type(story_type)
