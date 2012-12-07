@@ -50,6 +50,7 @@ class TrackStats
       @project = project
     end
     @stories = nil
+    @iter_criteria = nil
   end
 
   def points
@@ -100,6 +101,7 @@ class TrackStats
 
   def iteration(iteration_key)
     @iter_criteria = ITERATIONS[iteration_key]
+    @fetched = false
     self
   end
 
@@ -117,6 +119,7 @@ class TrackStats
   end
 
   def accepted_possible?
+    return true if @fetched
     state_criteria = @criteria[:state]
     return true if (!state_criteria)
     share_an_element?(state_criteria, [STATES[:accepted]].flatten)
@@ -128,9 +131,9 @@ class TrackStats
       iter = @iteration ||= PivotalTracker::Iteration
       filter_iter = iter.method(@iter_criteria[0])
       if @iter_criteria[1]
-        @stories ||= filter_iter.call(@project, @iter_criteria[1]).stories
+        @stories = filter_iter.call(@project, @iter_criteria[1])[0].stories
       else
-        @stories ||= filter_iter.call(@project).stories
+        @stories = filter_iter.call(@project).stories
       end
     else
       @stories ||= @project.stories.all

@@ -17,7 +17,10 @@ describe TrackStats do
 
     iter = mock(PivotalTracker::Iteration)
     iter.stub_chain(:current, :stories).and_return(strs[0..1])
-    iter.stub_chain("done", :stories).and_return([strs[2]])
+
+    prior_iter = mock(PivotalTracker::Iteration)
+    prior_iter.stub(:stories).and_return([strs[2]])
+    iter.stub_chain("done").and_return([prior_iter])
     trackstats.iteration = iter
   end
 
@@ -116,6 +119,10 @@ describe TrackStats do
 
     it 'reports 0 velocity for stories not accepted' do
       trackstats.state(:wip).iteration(:current).velocity.should == 0
+    end
+
+    it 'calculates velocity for the entire project' do
+      trackstats.velocity.should == 5
     end
   end
 
