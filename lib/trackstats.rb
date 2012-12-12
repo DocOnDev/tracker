@@ -27,7 +27,7 @@ class TrackStats
 
   def initialize(project=CONFIG[:project][:id])
     PivotalTracker::Client.token = CONFIG[:user][:token]
-    PivotalTracker::Client.use_ssl = true
+    PivotalTracker::Client.use_ssl = CONFIG[:ssl]
     self.project = project
     @label = nil
     @criteria = {}
