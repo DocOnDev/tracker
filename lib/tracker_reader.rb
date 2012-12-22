@@ -1,7 +1,7 @@
 require 'pivotal-tracker'
 require 'yaml'
 
-class TrackStats
+class TrackerReader
   attr_accessor :configuration
   CONFIG = YAML.load_file("config/config.yml") unless defined? CONFIG
 
@@ -71,7 +71,6 @@ class TrackStats
 
   def state(story_state)
     story_state = [story_state].flatten
-    p STATES[:wip]
     if @configuration[:wip] && @configuration[:wip][:include_rejected]
       STATES[:wip] << "rejected" if !STATES[:wip].include? "rejected"
     end
