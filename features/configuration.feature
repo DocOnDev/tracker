@@ -11,3 +11,10 @@ Feature: Configuration File Settings
     When I filter for WIP
     Then the points should not include rejected stories
 
+    Given a WIP includes rejected entry in the configuration file
+    When I filter for WIP
+    Then the count should include rejected stories
+
+    Given a WIP not includes rejected entry in the configuration file
+    When I filter for WIP
+    Then the points should not include rejected stories

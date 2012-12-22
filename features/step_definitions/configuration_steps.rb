@@ -28,10 +28,24 @@ Before do
 end
 
 Given /^no WIP entry in the configuration file$/ do
+  @ts.configuration[:wip] = nil
+end
+
+Given /^a WIP includes rejected entry in the configuration file$/ do
+  @ts.configuration[:wip] = {:include_rejected => true}
+end
+
+Given /^a WIP not includes rejected entry in the configuration file$/ do
+  p "should NOT include rejected"
+  @ts.configuration[:wip] = {:include_rejected => false}
 end
 
 When /^I filter for WIP$/ do
   @ts.state(:wip)
+end
+
+Then /^the count should include rejected stories$/ do
+    @ts.count.should == 4
 end
 
 Then /^the count should not include rejected stories$/ do

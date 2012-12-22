@@ -2,6 +2,7 @@ require 'pivotal-tracker'
 require 'yaml'
 
 class TrackStats
+  attr_accessor :configuration
   CONFIG = YAML.load_file("config/config.yml") unless defined? CONFIG
 
   STATES = {
@@ -26,8 +27,9 @@ class TrackStats
   }
 
   def initialize(project=CONFIG[:project][:id])
-    PivotalTracker::Client.token = CONFIG[:user][:token]
-    PivotalTracker::Client.use_ssl = CONFIG[:ssl]
+    @configuration = CONFIG
+    PivotalTracker::Client.token = @configuration[:user][:token]
+    PivotalTracker::Client.use_ssl = @configuration[:ssl]
     self.project = project
     @label = nil
     @criteria = {}
@@ -69,6 +71,10 @@ class TrackStats
 
   def state(story_state)
     story_state = [story_state].flatten
+    p STATES[:wip]
+    if @configuration[:wip] && @configuration[:wip][:include_rejected]
+      STATES[:wip] << "rejected" if !STATES[:wip].include? "rejected"
+    end
     record_criteria(:state, story_state.map{ |state| STATES[state] })
   end
 
