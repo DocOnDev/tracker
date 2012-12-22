@@ -73,6 +73,8 @@ class TrackerReader
     story_state = [story_state].flatten
     if @configuration[:wip] && @configuration[:wip][:include_rejected]
       STATES[:wip] << "rejected" if !STATES[:wip].include? "rejected"
+    else
+      STATES[:wip].delete("rejected")
     end
     record_criteria(:state, story_state.map{ |state| STATES[state] })
   end

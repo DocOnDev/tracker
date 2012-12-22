@@ -1,10 +1,10 @@
 PROJECT_PATH       = File.join(File.dirname(__FILE__), "../..")
-TRACK_STATS        = "#{PROJECT_PATH}/lib/trackstats.rb"
+TRACK_STATS        = "#{PROJECT_PATH}/lib/tracker_reader.rb"
 require "#{TRACK_STATS}"
 require 'cucumber/rspec/doubles'
 
 Before do
-  @ts = TrackStats.new
+  @ts = TrackerReader.new
   strs = Array.new(6)
   strs[0] = PivotalTracker::Story.new(:owned_by => "Bob", :labels => "pwa,heartX", :current_state => "accepted", :story_type => "Feature", :estimate => 5)
   strs[1] = PivotalTracker::Story.new(:owned_by => "Tom", :labels => nil, :current_state => "finished", :story_type => "Bug", :estimate => 3)
@@ -36,7 +36,6 @@ Given /^a WIP includes rejected entry in the configuration file$/ do
 end
 
 Given /^a WIP not includes rejected entry in the configuration file$/ do
-  p "should NOT include rejected"
   @ts.configuration[:wip] = {:include_rejected => false}
 end
 
@@ -45,13 +44,13 @@ When /^I filter for WIP$/ do
 end
 
 Then /^the count should include rejected stories$/ do
-    @ts.count.should == 4
+  @ts.count.should == 4
 end
 
 Then /^the count should not include rejected stories$/ do
-    @ts.count.should == 3
+  @ts.count.should == 3
 end
 
 Then /^the points should not include rejected stories$/ do
-    @ts.points.should == 9
+  @ts.points.should == 9
 end
