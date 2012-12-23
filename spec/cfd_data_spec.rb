@@ -5,15 +5,9 @@ require 'cfd_data'
 # Write data to external file
 
 describe CFDData do
-  subject 
-    CFDData new(file_name)
-
   describe 'read data from file' do
     context 'missing file' do
       it 'should have 0 records' do
-        let(:file_name) { 'bogus_file.json' }
-        its(:count) { should 0}
-
         cfd = CFDData.new('bogus_file.json')
         cfd.record_count.should == 0
       end
@@ -25,6 +19,24 @@ describe CFDData do
         cfd.record_count.should == 4
       end
     end
+  end
 
+  describe 'append data from tracker' do
+    it 'should record total points and count for today' do
+      cfd = CFDData.new('sample.json')
+      cfd.add_daily_record
+      cfd.record_count.should == 5
+      cfd[Date.today.to_s][:rejected].should_not be_nil
+    end
+  end
+
+  describe 'write data to file' do
+    context 'write to a new file' do
+      cfd = CFDData.new('sample.json')
+      cfd.add_daily_record
+      cfd.write('temp.json')
+      temp_cfd = CFDData.new('temp.json')
+      temp_cfd.record_count.should == 5
+    end
   end
 end
