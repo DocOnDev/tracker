@@ -1,4 +1,5 @@
 class CFDData
+  $LOAD_PATH << './lib'
   require 'json'
   require 'tracker_reader'
 
