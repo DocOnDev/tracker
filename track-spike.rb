@@ -1,11 +1,11 @@
-load 'lib/trackstats.rb'
+load 'lib/tracker_reader.rb'
 
 def report_stories(stories, label)
   p "#{label}: #{stories.count} / #{stories.points}"
 end
 
 def run_stats
-  @trackstats = TrackStats.new
+  @reader = TrackerReader.new
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
@@ -21,20 +21,20 @@ def run_stats
 end
 
 def hit_live project_id, label, owners
-  @trackstats.project = project_id
-  report_stories(@trackstats.state(:accepted).label(label), "Accepted")
-  report_stories(@trackstats.state(:rejected).label(label), "Rejected")
-  report_stories(@trackstats.state(:delivered).label(label), "Delivered")
-  report_stories(@trackstats.state(:finished).label(label), "Finished")
-  report_stories(@trackstats.state(:started).label(label), "Started")
-  report_stories(@trackstats.state(:backlog).label(label), "Backlog")
-  report_stories(@trackstats.type(:bug).label(label), "Defects")
-  report_stories(@trackstats.type(:Chore).label(label), "Chores")
+  @reader.project = project_id
+  report_stories(@reader.state(:accepted).label(label), "Accepted")
+  report_stories(@reader.state(:rejected).label(label), "Rejected")
+  report_stories(@reader.state(:delivered).label(label), "Delivered")
+  report_stories(@reader.state(:finished).label(label), "Finished")
+  report_stories(@reader.state(:started).label(label), "Started")
+  report_stories(@reader.state(:backlog).label(label), "Backlog")
+  report_stories(@reader.type(:bug).label(label), "Defects")
+  report_stories(@reader.type(:Chore).label(label), "Chores")
   owners.each do |owner|
-    report_stories(@trackstats.state(:wip).owner(owner).label(label), owner)
+    report_stories(@reader.state(:wip).owner(owner).label(label), owner)
   end
-  report_stories(@trackstats.state(:icebox).label(label), "Icebox")
-  report_stories(@trackstats.state(:wip).label(label), "Total WIP")
-  report_stories(@trackstats.iteration(:current).label(label).state(:accepted), "Current Velocity")
-  report_stories(@trackstats.iteration(:prior).label(label).state(:accepted), "Prior Velocity")
+  report_stories(@reader.state(:icebox).label(label), "Icebox")
+  report_stories(@reader.state(:wip).label(label), "Total WIP")
+  report_stories(@reader.iteration(:current).label(label).state(:accepted), "Current Velocity")
+  report_stories(@reader.iteration(:prior).label(label).state(:accepted), "Prior Velocity")
 end
