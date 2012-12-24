@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Personalize CFD</title>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+    <script type='text/javascript'>
+      //<![CDATA[ 
+      $(function () {
+          var chart;
+          $(document).ready(function() {
+            chart = new Highcharts.Chart({
+              chart: {
+                renderTo: 'container',
+                type: 'area'
+              },
+              title: {
+                text: 'Personalize Team'
+              },
+              subtitle: {
+                text: 'Cumulative Flow Diagram'
+              },
+              xAxis: {
+                categories: [],
+                tickmarkPlacement: 'on',
+                title: {
+                  enabled: false
+                }
+              },
+              yAxis: {
+                title: {
+                  text: 'Points'
+                }
+            },
+            tooltip: {
+              formatter: function() {
+                return ''+
+                this.x +': '+ Highcharts.numberFormat(this.y, 0, ',') +' points';
+              }
+            },
+            plotOptions: {
+              area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                  lineWidth: 1,
+                  lineColor: '#666666'
+                }
+              }
+            },
+            series: [{
+              name: 'Asia',
+              data: [502, 635, 809, 947, 1402, 3634, 5268]
+              }, {
+                name: 'Africa',
+                data: [106, 107, 111, 133, 221, 767, 1766]
+              }, {
+                name: 'Europe',
+                data: [163, 203, 276, 408, 547, 729, 628]
+              }, {
+                name: 'America',
+                data: [18, 31, 54, 156, 339, 818, 1201]
+              }, {
+                name: 'Oceania',
+                data: [2, 2, 2, 6, 13, 30, 46]
+              }]
+            });
+
+            $.getJSON("http://localhost:8888/personalize.json",function(result){
+              chart.xAxis.categories = ['Doc', 'Jen', 'Sean', 'Courtney', 'Jack', 'Emerson', 'Liam'];
+                      // $("div").append(result.firstName + " " + result.lastName + " " + result.age);
+            });
+          });
+        });
+      //]]>  
+    </script>
+
+  </head>
+  <body>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+  </body>
+</html>
