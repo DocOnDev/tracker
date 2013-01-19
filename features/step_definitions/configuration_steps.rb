@@ -38,10 +38,6 @@ Given /^I specify the "(.*?)" configuration file$/ do |project_name|
   @ts = TrackerReader.new :configuration => "config/#{project_name}.yml"
 end
 
-Then /^the personalize configuration file is used$/ do
-    @ts.configuration[:project][:id].should == 52897
-end
-
 Given /^no WIP entry in the configuration file$/ do
   @ts.configuration[:wip] = nil
 end
