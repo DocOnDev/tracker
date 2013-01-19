@@ -3,7 +3,6 @@ require 'yaml'
 
 class TrackerReader
   attr_accessor :configuration
-  CONFIG = YAML.load_file("config/config.yml") unless defined? CONFIG
 
   STATES = {
     :unscheduled => "unscheduled",
@@ -26,8 +25,9 @@ class TrackerReader
     :next => [nil, {:offset => 1, :limit => 1}]
   }
 
-  def initialize(project=CONFIG[:project][:id])
-    @configuration = CONFIG
+  def initialize(params={})
+    @configuration = YAML.load_file(params[:configuration] || "config/config.yml")
+    project = params[:project] || @configuration[:project][:id]
     PivotalTracker::Client.token = @configuration[:user][:token]
     PivotalTracker::Client.use_ssl = @configuration[:ssl]
     self.project = project

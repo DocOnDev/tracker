@@ -27,6 +27,21 @@ Before do
   @ts.iteration = iter
 end
 
+Given /^no configuration file specified$/ do
+end
+
+Then /^the project id is (\d+)$/ do |project_id|
+  @ts.configuration[:project][:id].should == project_id.to_i
+end
+
+Given /^I specify the "(.*?)" configuration file$/ do |project_name|
+  @ts = TrackerReader.new :configuration => "config/#{project_name}.yml"
+end
+
+Then /^the personalize configuration file is used$/ do
+    @ts.configuration[:project][:id].should == 52897
+end
+
 Given /^no WIP entry in the configuration file$/ do
   @ts.configuration[:wip] = nil
 end
