@@ -3,6 +3,8 @@ class CFDData
   require 'json'
   require 'tracker_reader'
 
+  attr_writer :reader
+
   CFD_STATES = [:icebox, :backlog, :started, :finished, :delivered, :accepted, :rejected]
 
   def initialize(file_name='cfd.json')
@@ -16,9 +18,9 @@ class CFDData
   end
 
   def add_daily_record
-    reader = TrackerReader.new
+    @reader ||= TrackerReader.new
     record = {}
-    CFD_STATES.each{ |state| record[state] = reader.state(state).points}
+    CFD_STATES.each{ |state| record[state] = @reader.state(state).points}
     @cfd[Date.today.to_s] = record
   end
 

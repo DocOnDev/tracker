@@ -5,6 +5,18 @@ require 'cfd_data'
 # Write data to external file
 
 describe CFDData do
+  let(:cfd) {CFDData.new('sample.json')}
+
+  describe 'supports dependency injection' do
+    it 'uses the injected reader', :focus => true do
+      cfd = CFDData.new('junk.json')
+      reader = TrackerReader.new
+      cfd.reader = reader
+      reader.should_receive(:state).at_least(2).times.and_return(reader)
+      cfd.add_daily_record
+    end
+  end
+
   describe 'read data from file' do
     context 'missing file' do
       it 'should have 0 records' do
@@ -15,7 +27,6 @@ describe CFDData do
 
     context 'populated data file' do
       it 'should read 4 records from sample file' do
-        cfd = CFDData.new('sample.json')
         cfd.record_count.should == 4
       end
     end
@@ -23,7 +34,6 @@ describe CFDData do
 
   describe 'append data from tracker' do
     it 'should record total points and count for today' do
-      cfd = CFDData.new('sample.json')
       cfd.add_daily_record
       cfd.record_count.should == 5
       cfd[Date.today.to_s][:rejected].should_not be_nil
@@ -31,8 +41,7 @@ describe CFDData do
   end
 
   describe 'write data to file' do
-    context 'write to a new file' do
-      cfd = CFDData.new('sample.json')
+    it 'should write to a new file' do
       cfd.add_daily_record
       cfd.write('temp.json')
       temp_cfd = CFDData.new('temp.json')
