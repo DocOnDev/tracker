@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'pivotal-tracker'
+gem 'json'
+gem 'couchrest'
 
 group :development do
     gem 'guard-rspec'
