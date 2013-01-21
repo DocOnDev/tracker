@@ -18,6 +18,25 @@ describe CFDData do
     end
   end
 
+  describe 'supports label filtering' do
+    let(:cfd) {CFDData.new(CFDFileIO.new('sample.json'))}
+    it 'defaults to no labels', :focus => true do
+      cfd.add_daily_record
+      cfd[Date.today.to_s][:icebox].should be > 2
+    end
+
+    it 'accepts a single label', :focus => true do
+      cfd.add_daily_record :for => "testing"
+      cfd[Date.today.to_s][:icebox].should == 1
+    end
+
+    it 'accepts multiple labels', :focus => true do
+      cfd.add_daily_record :for => ["testing", "more_testing"]
+      cfd[Date.today.to_s][:icebox].should == 2
+    end
+
+  end
+
   context 'working with local file' do
     let(:cfd) {CFDData.new(CFDFileIO.new('sample.json'))}
 
@@ -59,14 +78,14 @@ describe CFDData do
 
     describe 'read data from couch' do
       context 'populated database' do
-        it 'should read more than one record', :focus => true do
+        it 'should read more than one record' do
           cfd.record_count.should be > 1
         end
       end
     end
 
     describe 'write data to couch' do
-      it 'should write a new record', :focus => true do
+      it 'should write a new record' do
         starting_count = cfd.record_count
         cfd.add_daily_record
         cfd.write
