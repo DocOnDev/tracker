@@ -12,27 +12,27 @@ def run_stats
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
   p "DevSpect"
-  hit_live 707539, nil, ["Michael Norton"]
-  save_data 707539, "devspect"
+  hit_live 707539, nil, ["Doc Norton"]
+  save_data "devspect", nil
   p "Personalize"
   hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
-  save_data 52897, "personalize"
+  save_data "personalize", ["heartx", "my profile", "personal_collections"]
   p "===================================="
   p "Pull"
   hit_live 614999, nil, ["Darby Frey", "Ruslan Gilfanov", "Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart", "Sean White"]
-  save_data 614999, "pull"
+  save_data "pull", nil
   p "===================================="
   p "Humor"
   hit_live 578505, nil, ["Ian O'Dea"]
-  save_data 578505, "humor"
+  save_data "humor", nil
   p "===================================="
 end
 
-def save_data project_id, project_name
+def save_data project_name, labels
   cfd = CFDData.new(CFDCouchIO.new(project_name))
   @reader.project = project_id
   cfd.reader = @reader
-  cfd.add_daily_record
+  cfd.add_daily_record :for => labels
   cfd.write
 end
 
