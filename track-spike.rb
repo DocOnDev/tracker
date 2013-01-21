@@ -37,7 +37,6 @@ def save_data project_id, project_name
 end
 
 def hit_live project_id, label, owners
-<<<<<<< HEAD
   @trackstats.project = project_id
   report_stories(@trackstats.state(:accepted).label(label), "Accepted")
   report_stories(@trackstats.state(:rejected).label(label), "Rejected")
