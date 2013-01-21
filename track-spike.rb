@@ -15,7 +15,7 @@ def run_stats
   hit_live 707539, nil, ["Doc Norton"]
   save_data "devspect", nil
   p "Personalize"
-  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
+  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
   save_data "personalize", ["heartx", "my profile", "personal_collections"]
   p "===================================="
   p "Pull"
