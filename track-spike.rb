@@ -1,11 +1,11 @@
-load 'lib/trackstats.rb'
+load 'lib/tracker_reader.rb'
 
 def report_stories(stories, label)
   p "#{label}: #{stories.count} / #{stories.points}"
 end
 
 def run_stats
-  @trackstats = TrackStats.new
+  @reader = TrackerReader.new
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
@@ -33,10 +33,10 @@ def hit_live project_id, label, owners
   report_stories(@trackstats.type(:Chore).label(label), "Chores")
   report_stories(@trackstats.iteration(:current).label(label).type(:chore), "Current Chores")
   owners.each do |owner|
-    report_stories(@trackstats.state(:wip).owner(owner).label(label), owner)
+    report_stories(@reader.state(:wip).owner(owner).label(label), owner)
   end
-  report_stories(@trackstats.state(:icebox).label(label), "Icebox")
-  report_stories(@trackstats.state(:wip).label(label), "Total WIP")
-  report_stories(@trackstats.iteration(:current).label(label).state(:accepted), "Current Velocity")
-  report_stories(@trackstats.iteration(:prior).label(label).state(:accepted), "Prior Velocity")
+  report_stories(@reader.state(:icebox).label(label), "Icebox")
+  report_stories(@reader.state(:wip).label(label), "Total WIP")
+  report_stories(@reader.iteration(:current).label(label).state(:accepted), "Current Velocity")
+  report_stories(@reader.iteration(:prior).label(label).state(:accepted), "Prior Velocity")
 end

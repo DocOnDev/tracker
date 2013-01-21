@@ -17,6 +17,8 @@ test/tmp
 test/version_tmp
 tmp
 
+temp.json
+
 # YARD artifacts
 .yardoc
 _yardoc

@@ -1,0 +1,12 @@
+{
+  "2012-12-11":{"accepted":75,"rejected":0,"delivered":2,"finished":2,"started":3,"backlog":14},
+  "2012-12-12":{"accepted":77,"rejected":2,"delivered":2,"finished":2,"started":3,"backlog":14},
+  "2012-12-13":{"accepted":83,"rejected":0,"delivered":0,"finished":0,"started":5,"backlog":14},
+  "2012-12-14":{"accepted":83,"rejected":0,"delivered":0,"finished":0,"started":5,"backlog":14},
+  "2012-12-17":{"accepted":83,"rejected":0,"delivered":0,"finished":5,"started":4,"backlog":10},
+  "2012-12-18":{"accepted":85,"rejected":0,"delivered":5,"finished":0,"started":2,"backlog":10},
+  "2012-12-19":{"accepted":92,"rejected":0,"delivered":0,"finished":1,"started":5,"backlog":3},
+  "2012-12-20":{"accepted":92,"rejected":0,"delivered":1,"finished":3,"started":3,"backlog":3},
+  "2012-12-21":{"accepted":92,"rejected":0,"delivered":1,"finished":3,"started":3,"backlog":3}
+}
+
