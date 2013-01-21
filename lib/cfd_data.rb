@@ -7,10 +7,9 @@ class CFDData
 
   CFD_STATES = [:icebox, :backlog, :started, :finished, :delivered, :accepted, :rejected]
 
-  def initialize(file_name='cfd.json')
-    @file_name = file_name
-    @cfd = {}
-    @cfd = JSON.parse(IO.read(@file_name)) if File.exists?(@file_name)
+  def initialize(io=CFDFileIO.new('cfd.json'))
+    @io = io
+    @cfd = io.load
   end
 
   def write(file_name=@file_name)
