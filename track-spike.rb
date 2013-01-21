@@ -7,13 +7,9 @@ def report_stories(stories, label)
 end
 
 def run_stats
-  @reader = TrackerReader.new
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
-  p "DevSpect"
-  hit_live 707539, nil, ["Michael Norton"]
-  save_data 707539, "devspect"
   p "Personalize"
   hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
   save_data 52897, "personalize"
@@ -26,28 +22,32 @@ def run_stats
   hit_live 578505, nil, ["Ian O'Dea"]
   save_data 578505, "humor"
   p "===================================="
+  p "DevSpect"
+  hit_live 707539, nil, ["Michael Norton"]
+  save_data 707539, "devspect"
+  p "===================================="
 end
 
 def save_data project_id, project_name
   cfd = CFDData.new(CFDCouchIO.new(project_name))
-  @reader.project = project_id
   cfd.reader = @reader
   cfd.add_daily_record
   cfd.write
 end
 
 def hit_live project_id, label, owners
-  @trackstats.project = project_id
-  report_stories(@trackstats.state(:accepted).label(label), "Accepted")
-  report_stories(@trackstats.state(:rejected).label(label), "Rejected")
-  report_stories(@trackstats.state(:delivered).label(label), "Delivered")
-  report_stories(@trackstats.state(:finished).label(label), "Finished")
-  report_stories(@trackstats.state(:started).label(label), "Started")
-  report_stories(@trackstats.state(:backlog).label(label), "Backlog")
-  report_stories(@trackstats.type(:bug).label(label), "All Defects")
-  report_stories(@trackstats.iteration(:current).label(label).type(:bug), "Current Defects")
-  report_stories(@trackstats.type(:Chore).label(label), "Chores")
-  report_stories(@trackstats.iteration(:current).label(label).type(:chore), "Current Chores")
+  @reader = TrackerReader.new
+  @reader.project = project_id
+  report_stories(@reader.state(:accepted).label(label), "Accepted")
+  report_stories(@reader.state(:rejected).label(label), "Rejected")
+  report_stories(@reader.state(:delivered).label(label), "Delivered")
+  report_stories(@reader.state(:finished).label(label), "Finished")
+  report_stories(@reader.state(:started).label(label), "Started")
+  report_stories(@reader.state(:backlog).label(label), "Backlog")
+  report_stories(@reader.type(:bug).label(label), "All Defects")
+  report_stories(@reader.iteration(:current).label(label).type(:bug), "Current Defects")
+  report_stories(@reader.type(:Chore).label(label), "Chores")
+  report_stories(@reader.iteration(:current).label(label).type(:chore), "Current Chores")
   owners.each do |owner|
     report_stories(@reader.state(:wip).owner(owner).label(label), owner)
   end
