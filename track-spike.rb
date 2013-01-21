@@ -9,10 +9,10 @@ def run_stats
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
-  p "Personalize / HeartX"
-  hit_live 52897, "heartx", ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
+  p "Personalize"
+  hit_live 52897, ["heartx","my profile","personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
   p "===================================="
-  p "Pull / (all)"
+  p "Pull"
   hit_live 614999, nil, ["Darby Frey", "Ruslan Gilfanov", "Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart", "Sean White"]
   p "===================================="
   p "Humor"
@@ -28,8 +28,10 @@ def hit_live project_id, label, owners
   report_stories(@trackstats.state(:finished).label(label), "Finished")
   report_stories(@trackstats.state(:started).label(label), "Started")
   report_stories(@trackstats.state(:backlog).label(label), "Backlog")
-  report_stories(@trackstats.type(:bug).label(label), "Defects")
+  report_stories(@trackstats.type(:bug).label(label), "All Defects")
+  report_stories(@trackstats.iteration(:current).label(label).type(:bug), "Current Defects")
   report_stories(@trackstats.type(:Chore).label(label), "Chores")
+  report_stories(@trackstats.iteration(:current).label(label).type(:chore), "Current Chores")
   owners.each do |owner|
     report_stories(@trackstats.state(:wip).owner(owner).label(label), owner)
   end
