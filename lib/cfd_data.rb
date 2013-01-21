@@ -13,7 +13,7 @@ class CFDData
   end
 
   def write(file_name=@file_name)
-    File.open(file_name,"w") { |f| f.write(@cfd.to_json) }
+    @io.put(@cfd)
   end
 
   def add_daily_record
