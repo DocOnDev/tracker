@@ -5,7 +5,7 @@ class CFDData
 
   attr_writer :reader
 
-  CFD_STATES = [:icebox, :backlog, :started, :finished, :delivered, :accepted, :rejected]
+  CFD_STATES = [:icebox, :backlog, :started, :finished, :delivered, :rejected, :done]
 
   def initialize(io=CFDFileIO.new('cfd.json'))
     @io = io
@@ -16,10 +16,11 @@ class CFDData
     @io.put(@cfd)
   end
 
-  def add_daily_record
+  def add_daily_record(params=nil)
+    labels = params[:for] if params
     @reader ||= TrackerReader.new
     record = {}
-    CFD_STATES.each{ |state| record[state] = @reader.state(state).points}
+    CFD_STATES.each{ |state| record[state] = @reader.label(labels).state(state).points}
     @cfd[Date.today.to_s] = record
   end
 
