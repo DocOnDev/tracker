@@ -1,4 +1,6 @@
 load 'lib/tracker_reader.rb'
+load 'lib/cfd_data.rb'
+load 'lib/cfd_couchio.rb'
 
 def report_stories(stories, label)
   p "#{label}: #{stories.count} / #{stories.points}"
@@ -9,18 +11,33 @@ def run_stats
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
+  p "DevSpect"
+  hit_live 707539, nil, ["Michael Norton"]
+  save_data 707539, "devspect"
   p "Personalize"
-  hit_live 52897, ["heartx","my profile","personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
+  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long"]
+  save_data 52897, "personalize"
   p "===================================="
   p "Pull"
   hit_live 614999, nil, ["Darby Frey", "Ruslan Gilfanov", "Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart", "Sean White"]
+  save_data 614999, "pull"
   p "===================================="
   p "Humor"
   hit_live 578505, nil, ["Ian O'Dea"]
+  save_data 578505, "humor"
   p "===================================="
 end
 
+def save_data project_id, project_name
+  cfd = CFDData.new(CFDCouchIO.new(project_name))
+  @reader.project = project_id
+  cfd.reader = @reader
+  cfd.add_daily_record
+  cfd.write
+end
+
 def hit_live project_id, label, owners
+<<<<<<< HEAD
   @trackstats.project = project_id
   report_stories(@trackstats.state(:accepted).label(label), "Accepted")
   report_stories(@trackstats.state(:rejected).label(label), "Rejected")
