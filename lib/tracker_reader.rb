@@ -28,8 +28,6 @@ class TrackerReader
   def initialize(params={})
     @configuration = YAML.load_file(params[:configuration] || "config/config.yml")
     project = params[:project] || @configuration[:project][:id]
-    PivotalTracker::Client.token = @configuration[:user][:token]
-    PivotalTracker::Client.use_ssl = @configuration[:ssl]
     self.project = project
     @label = nil
     @criteria = {}
@@ -41,6 +39,8 @@ class TrackerReader
 
   def project=(project)
     if project.is_a?(Integer)
+      PivotalTracker::Client.token = @configuration[:user][:token]
+      PivotalTracker::Client.use_ssl = @configuration[:ssl]
       @project = PivotalTracker::Project.find(project)
     else
       @project = project
