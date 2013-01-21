@@ -40,7 +40,7 @@ class TrackerReader
   def project=(project)
     if project.is_a?(Integer)
       PivotalTracker::Client.token = @configuration[:user][:token]
-      PivotalTracker::Client.use_ssl = @configuration[:ssl]
+      PivotalTracker::Client.use_ssl = @configuration[:project][:ssl]
       @project = PivotalTracker::Project.find(project)
     else
       @project = project
