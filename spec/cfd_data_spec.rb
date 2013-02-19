@@ -52,7 +52,7 @@ describe CFDData do
     end
 
     describe 'append data from tracker' do
-      it 'should record total points and count for today', :focus => true do
+      it 'should record total points and count for today' do
         cfd.add_daily_record
         cfd.record_count.should == 5
         cfd[Date.today.to_s][:rejected].should_not be_nil
@@ -60,7 +60,7 @@ describe CFDData do
     end
 
     describe 'write data to file' do
-      it 'should append to file', :focus => true do
+      it 'should append to file' do
         FileUtils.cp 'cfd_sample.json', 'temp.json'
         cfd = CFDData.new(CFDFileIO.new('temp.json'))
         cfd.add_daily_record
