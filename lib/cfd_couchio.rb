@@ -6,7 +6,7 @@ COUCH_STORE = "https://#{CLOUDANT_USER}:#{CLOUDANT_PASS}@docondev.cloudant.com/"
 class CFDCouchIO
   def initialize(db_name='devspect')
     @db_name = db_name
-    @end_point = COUCH_STORE+@db_name+'/'
+    @end_point = "#{COUCH_STORE}#{@db_name}/"
   end
 
   def load
