@@ -10,23 +10,44 @@ def run_stats
   p "===================================="
   p "CFD data for #{Time.new.localtime}"
   p "===================================="
+  p "Pretty Face"
+  hit_live 727223, nil, ["Doc Norton", "Jeff Morgan", "Joel Byler", "Steve Jackson", "Ben Woznicki"]
+  save_data "pretty_face", nil
+  p "===================================="
   p "DevSpect"
   hit_live 707539, nil, ["Doc Norton"]
   save_data "devspect", nil
   p "===================================="
+  p "Personalize/HeartX"
+  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
+  save_data "personalization", ["heartx", "my profile", "personal_collections"]
+  p "===================================="
   p "Personalize"
-  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Tristan Blease", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
-  save_data "personalize", ["heartx", "my profile", "personal_collections"]
+  hit_live 52897, nil, ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
+  save_data "personalize", nil
   p "===================================="
   p "Pull"
   hit_live 614999, nil, ["Darby Frey", "Ruslan Gilfanov", "Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart", "Sean White"]
   save_data "pull", nil
   p "===================================="
+  p "Pull/I-Tier"
+  hit_live 614999, ["i-tier"], ["Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart"]
+  save_data "pull_itier", ["i-tier"]
+  p "===================================="
+  p "Breadcrumb"
+  hit_live 567623, nil, ["Bogdan Filioreanu", "Ciprian Tarta", "Jason Crawford", "Bogdan Filioreanu", "Mahmud Din", "Zeke Huang", "Tim Mun", "Ben Bernard", "Andy Andrei Hurjui", "Andrew Miner", "Blake Scholl"]
+  save_data "breadcrumb", nil
+  p "===================================="
   p "Humor"
   hit_live 578505, nil, ["Ian O'Dea"]
   save_data "humor", nil
   p "===================================="
+  p "Reserve"
+  hit_live 725097, nil, ["Scott Rogers", "Stephen Johnston", "Dave Kong", "Par Trivedi", "Gerardo Diaz"]
+  save_data "reserve", nil
+  p "===================================="
 end
+
 
 def save_data project_name, labels
   cfd = CFDData.new(CFDCouchIO.new(project_name))
