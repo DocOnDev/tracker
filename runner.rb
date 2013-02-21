@@ -47,6 +47,18 @@ def run_stats
   hit_live 725097, nil, ["Scott Rogers", "Stephen Johnston", "Dave Kong", "Par Trivedi", "Gerardo Diaz"]
   save_data "reserve", nil
   p "===================================="
+  p "Deal Estate"
+  hit_live 126097, nil, ["Geoff Massanek", "Eric Meyer", "Dean Marano", "Carl Thuringer", "Sulabh Jain", "Syed Hussain", "Michael Hines", "Lauri Reeves", "Wai Feman", "Vartika Singh"]
+  save_data "deal_estate", nil
+  p "===================================="
+  p "Deal With It"
+  hit_live 358255, nil, ["Dave Moore", "Patrick Gombert", "Anthony Caliendo", "Blake Smith"]
+  save_data "deal_with_it", nil
+  p "===================================="
+  p "Local Deal Features"
+  hit_live 639881, nil, ["Lucas Willett", "Turner King", "Marcus Sacco", "Richie Vos", "Derrick Spell"]
+  save_data "local_deal", nil
+  p "===================================="
 end
 
 
