@@ -1,7 +1,7 @@
 load 'lib/tracker_reader.rb'
 load 'lib/cfd_data.rb'
 load 'lib/cfd_couchio.rb'
-load 'lib/velocity_data.rb'
+#load 'lib/velocity_data.rb'
 
 def report_stories(stories, label)
   p "#{label}: #{stories.count} / #{stories.points}"
@@ -58,6 +58,10 @@ def run_stats
   p "Local Deal Features"
   hit_live 639881, nil, ["Lucas Willett", "Turner King", "Marcus Sacco", "Richie Vos", "Derrick Spell"]
   save_data "local_deal", nil
+  p "===================================="
+  p "Deal Wizard"
+  hit_live 547815, nil, ["Ashish Dixit", "Stephen Wooten", "Dmitriy Pashkin", "Kavita Kochar", "Tom Calloway"]
+  save_data "deal_wizard", nil
   p "===================================="
 end
 
