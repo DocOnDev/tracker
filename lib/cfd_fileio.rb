@@ -10,6 +10,6 @@ class CFDFileIO
   end
 
   def put(cfd)
-    File.open(file_name,"w") { |f| f.write(cfd.to_json) }
+    File.open(@file_name,"w") { |f| f.write(cfd.to_json) }
   end
 end

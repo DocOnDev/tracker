@@ -2,10 +2,6 @@ require 'cfd_data'
 require 'cfd_fileio'
 require 'cfd_couchio'
 
-# Read data from source
-# Daily - Record total points and count for each state
-# Write data to source
-
 describe CFDData do
   describe 'supports dependency injection' do
     it 'uses the injected reader' do
@@ -19,18 +15,18 @@ describe CFDData do
   end
 
   describe 'supports label filtering' do
-    let(:cfd) {CFDData.new(CFDFileIO.new('sample.json'))}
-    it 'defaults to no labels', :focus => true do
+    let(:cfd) {CFDData.new(CFDFileIO.new('cfd_sample.json'))}
+    it 'defaults to no labels' do
       cfd.add_daily_record
       cfd[Date.today.to_s][:icebox].should be > 2
     end
 
-    it 'accepts a single label', :focus => true do
+    it 'accepts a single label' do
       cfd.add_daily_record :for => "testing"
       cfd[Date.today.to_s][:icebox].should == 1
     end
 
-    it 'accepts multiple labels', :focus => true do
+    it 'accepts multiple labels' do
       cfd.add_daily_record :for => ["testing", "more_testing"]
       cfd[Date.today.to_s][:icebox].should == 2
     end
@@ -38,7 +34,7 @@ describe CFDData do
   end
 
   context 'working with local file' do
-    let(:cfd) {CFDData.new(CFDFileIO.new('sample.json'))}
+    let(:cfd) {CFDData.new(CFDFileIO.new('cfd_sample.json'))}
 
     describe 'read data from file' do
       context 'missing file' do
@@ -64,9 +60,11 @@ describe CFDData do
     end
 
     describe 'write data to file' do
-      it 'should write to a new file' do
+      it 'should append to file' do
+        FileUtils.cp 'cfd_sample.json', 'temp.json'
+        cfd = CFDData.new(CFDFileIO.new('temp.json'))
         cfd.add_daily_record
-        cfd.write('temp.json')
+        cfd.write()
         temp_cfd = CFDData.new(CFDFileIO.new('temp.json'))
         temp_cfd.record_count.should == 5
       end
