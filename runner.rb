@@ -65,7 +65,7 @@ def run_stats
   p "===================================="
   p "Quantum Lead"
   hit_live 584807, nil, ["Mike Busch", "Kris Urie", "Bob Beaty", "Darek Pasciak", "Matt", "Gary Fredericks", "Denny Abraham", "Jeremy Neander"]
-  save_data "deal_wizard", nil
+  save_data "quantum_lead", nil
   p "===================================="
 end
 
