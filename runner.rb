@@ -1,3 +1,4 @@
+require 'bundler/setup'
 load 'lib/tracker_reader.rb'
 load 'lib/cfd_data.rb'
 load 'lib/cfd_couchio.rb'

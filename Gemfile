@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'pivotal-tracker'
+gem 'pivotal-tracker', :git => 'git://github.com/DocOnDev/pivotal-tracker.git'
 gem 'json'
 gem 'couchrest'
 
