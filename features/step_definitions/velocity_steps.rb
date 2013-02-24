@@ -56,3 +56,16 @@ Then /^the velocity includes both "(.*?)" and "(.*?)" stories$/ do |label1, labe
   @velocity[Date.today.to_s][:points].should == vel.map(&:estimate).inject(:+)
 end
 
+Given /^a bogus file$/ do
+  @velocity = VelocityData.new(VelocityFileIO.new('bogus_file.json'))
+end
+
+Given /^a valid sample file$/ do
+  @velocity = VelocityData.new(VelocityFileIO.new('velocity_sample.json'))
+end
+
+Then /^there are (\d+) velocity records$/ do |records|
+  @velocity.record_count.should == records.to_i
+end
+
+
