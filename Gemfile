@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'pivotal-tracker', :git => 'git://github.com/DocOnDev/pivotal-tracker.git'
 gem 'json'
 gem 'couchrest'
+gem 'chronic'
 
 group :development do
     gem 'rspec'

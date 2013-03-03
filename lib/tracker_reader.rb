@@ -92,6 +92,33 @@ class TrackerReader
     record_criteria(:iteration, ITERATIONS[iteration_key])
   end
 
+  def end_date
+    iter = scope_to_iteration
+    iter.finish
+  end
+
+  def start_date
+    iter = scope_to_iteration
+    iter.start
+  end
+
+  def scope_to_iteration
+    iter_criteria = @criteria[:iteration]
+    @iteration ||= PivotalTracker::Iteration
+    # TODO: create iteration criteria class to improve readability
+    #           @iteration.method(iteration_criteria.method_name)
+    filter_iter = @iteration.method(iter_criteria[0])
+    if iter_criteria[1]
+      return filter_iter.call(@project, iter_criteria[1])[0]
+    else
+      return filter_iter.call(@project)
+    end
+  end
+
+  def iteration_filter?
+    @criteria[:iteration]
+  end
+
   private
   def record_criteria(type, value)
     @criteria = {} if @filtered
@@ -118,25 +145,21 @@ class TrackerReader
     share_an_element?(state_criteria, [STATES[:accepted]].flatten)
   end
 
-  def fetch_iteration_stories(iter_criteria)
-      @iteration ||= PivotalTracker::Iteration
-      # TODO: create iteration criteria class to improve readability
-      #           @iteration.method(iteration_criteria.method_name)
-      filter_iter = @iteration.method(iter_criteria[0])
-      if iter_criteria[1]
-        @stories = filter_iter.call(@project, iter_criteria[1])[0].stories
-      else
-        @stories = filter_iter.call(@project).stories
-      end
+  def fetch_iteration_stories
+    scope_to_iteration.stories
+  end
+
+  def fetch_project_stories
+    if iteration_filter?
+      return fetch_iteration_stories
+    else
+      return @project.stories.all
+    end
   end
 
   def filter_stories
-    if @criteria[:iteration]
-      @stories = fetch_iteration_stories(@criteria[:iteration])
-    else
-      @stories = @project.stories.all
-    end
-    filtered_stories = @stories.clone
+    stories = fetch_project_stories
+    filtered_stories = stories.clone
     # TODO: dry this up - make this into an each
     filtered_stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
     filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}

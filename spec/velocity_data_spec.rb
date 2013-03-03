@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'velocity_data'
 require 'velocity_fileio'
-#require 'velocity_couchio'
+require 'velocity_couchio'
 
 describe VelocityData do
   describe 'supports dependency injection' do
@@ -10,29 +10,9 @@ describe VelocityData do
       velocity = VelocityData.new(velocity_file)
       reader = TrackerReader.new
       velocity.reader = reader
-      reader.should_receive(:state).at_least(2).times.and_return(reader)
+      reader.should_receive(:state).at_least(1).times.and_return(reader)
       velocity.update_current_velocity
     end
-  end
-
-  describe 'supports label filtering' do
-    let(:velocity) {VelocityData.new(VelocityFileIO.new('velocity_sample.json'))}
-    it 'defaults to no labels', :focus => true do
-      velocity.update_current_velocity
-      puts velocity[Date.today.to_s]
-      velocity[Date.today.to_s][:points].should be > 2
-    end
-
-    it 'accepts a single label' do
-      velocity.update_current_velocity :for => "testing"
-      velocity[Date.today.to_s][:icebox].should == 1
-    end
-
-    it 'accepts multiple labels' do
-      velocity.update_current_velocity :for => ["testing", "more_testing"]
-      velocity[Date.today.to_s][:icebox].should == 2
-    end
-
   end
 
   context 'working with local file' do
@@ -57,18 +37,15 @@ describe VelocityData do
       it 'should record total points and count for today' do
         velocity.update_current_velocity
         velocity.record_count.should == 5
-        velocity[Date.today.to_s][:rejected].should_not be_nil
+        if Date.today.strftime("%A") == "Sunday"
+          check_date = Date.today
+        else
+          check_date = Chronic.parse('next sunday')
+        end
+        velocity[check_date.strftime("%Y-%m-%d")][:points].should_not be_nil
       end
     end
 
-    describe 'write data to file' do
-      it 'should write to a new file' do
-        velocity.update_current_velocity
-        velocity.write('temp.json')
-        temp_velocity = VelocityData.new(VelocityFileIO.new('temp.json'))
-        temp_velocity.record_count.should == 5
-      end
-    end
   end
 
   context 'working with couch' do

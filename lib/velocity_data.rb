@@ -19,8 +19,9 @@ class VelocityData
   def update_current_velocity(params=nil)
     labels = params[:for] if params
     @reader ||= TrackerReader.new
-    record = {:points => @reader.iteration(:current).label(labels).state(:done).points}
-    @velocity[Date.today.to_s] = record
+    record = {:points => @reader.iteration(:current).label(labels).velocity}
+    velocity_date = @reader.iteration(:current).end_date
+    @velocity[velocity_date.strftime("%Y-%m-%d")] = record
   end
 
   def [](_key)
