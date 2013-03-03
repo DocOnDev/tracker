@@ -12,7 +12,7 @@ class VelocityCouchIO
   def load
     vel = {}
     @db = CouchRest.database(@end_point)
-    vel = @db.view('points/velocity')
+    vel = @db.view('points/velocity')["rows"]
     vel
   end
 

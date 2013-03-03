@@ -4,6 +4,15 @@ require 'velocity_fileio'
 require 'velocity_couchio'
 
 describe VelocityData do
+  before(:each) do
+    if Date.today.strftime("%A") == "Sunday"
+      check_date = Date.today
+    else
+      check_date = Chronic.parse('next sunday')
+    end
+    @iteration_date = check_date.strftime("%Y-%m-%d")
+  end
+
   describe 'supports dependency injection' do
     it 'uses the injected reader' do
       velocity_file = VelocityFileIO.new('junk.json')
@@ -37,12 +46,7 @@ describe VelocityData do
       it 'should record total points and count for today' do
         velocity.update_current_velocity
         velocity.record_count.should == 5
-        if Date.today.strftime("%A") == "Sunday"
-          check_date = Date.today
-        else
-          check_date = Chronic.parse('next sunday')
-        end
-        velocity[check_date.strftime("%Y-%m-%d")][:points].should_not be_nil
+        velocity["velocity-#{@iteration_date}"][:points].should_not be_nil
       end
     end
 
@@ -58,16 +62,5 @@ describe VelocityData do
         end
       end
     end
-
-    describe 'write data to couch' do
-      it 'should write a new record' do
-        starting_count = velocity.record_count
-        velocity.update_current_velocity
-        velocity.write
-        velocity2 = VelocityData.new(VelocityCouchIO.new('devspect'))
-        velocity2.record_count.should == starting_count + 1
-      end
-    end
-
   end
 end
