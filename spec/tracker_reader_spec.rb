@@ -1,3 +1,4 @@
+require 'chronic'
 require 'tracker_reader'
 
 describe TrackerReader do
@@ -17,9 +18,11 @@ describe TrackerReader do
 
     iter = mock(PivotalTracker::Iteration)
     iter.stub_chain(:current, :stories).and_return(strs[0..1])
+    iter.stub_chain(:current, :start).and_return(Chronic.parse('last monday'))
 
     prior_iter = mock(PivotalTracker::Iteration)
     prior_iter.stub(:stories).and_return([strs[2]])
+    prior_iter.stub(:start).and_return(Chronic.parse('last monday'))
     iter.stub_chain("done").and_return([prior_iter])
     reader.iteration = iter
   end
@@ -106,6 +109,16 @@ describe TrackerReader do
     it 'can filter for prior iteration' do
       reader.iteration(:prior).count.should == 1
     end
+  end
+
+  context 'iteration dates' do
+    it 'can get the start date for current iteration' do
+      reader.iteration(:current).start_date.should == Chronic.parse('last monday')
+    end
+
+    #it 'can get the end date for the current iteration' do
+      #reader.iteration(:current).end_date.should == Chronic.parse('next sunday')
+    #end
   end
 
   context 'calculates velocity' do

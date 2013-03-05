@@ -1,3 +1,4 @@
+require 'bundler/setup'
 load 'lib/tracker_reader.rb'
 load 'lib/cfd_data.rb'
 load 'lib/cfd_couchio.rb'
@@ -75,6 +76,10 @@ def save_data project_name, labels
   cfd.reader = @reader
   cfd.add_daily_record :for => labels
   cfd.write
+  vel = VelocityData.new(VelocityCouchIO.new(project_name))
+  vel.reader = @reader
+  vel.update_current_velocity
+  vel.write
 end
 
 def hit_live project_id, label, owners
