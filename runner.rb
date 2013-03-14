@@ -60,10 +60,10 @@ def run_stats
   hit_live 639881, nil, ["Lucas Willett", "Turner King", "Marcus Sacco", "Richie Vos", "Derrick Spell"]
   save_data "local_deal", nil
   p "===================================="
-  p "Deal Wizard"
-  hit_live 547815, nil, ["Ashish Dixit", "Stephen Wooten", "Dmitriy Pashkin", "Kavita Kochar", "Tom Calloway"]
-  save_data "deal_wizard", nil
-  p "===================================="
+  # p "Deal Wizard"
+  # hit_live 547815, nil, ["Ashish Dixit", "Stephen Wooten", "Dmitriy Pashkin", "Kavita Kochar", "Tom Calloway"]
+  # save_data "deal_wizard", nil
+  # p "===================================="
   p "Quantum Lead"
   hit_live 584807, nil, ["Mike Busch", "Kris Urie", "Bob Beaty", "Darek Pasciak", "Matt", "Gary Fredericks", "Denny Abraham", "Jeremy Neander"]
   save_data "quantum_lead", nil
