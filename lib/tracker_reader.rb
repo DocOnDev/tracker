@@ -94,7 +94,7 @@ class TrackerReader
 
   def end_date
     iter = scope_to_iteration
-    iter.finish
+    iter.finish - 1
   end
 
   def start_date

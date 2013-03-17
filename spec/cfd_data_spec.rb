@@ -83,12 +83,15 @@ describe CFDData do
     end
 
     describe 'write data to couch' do
-      it 'should write a new record' do
+      it 'should update record for today' do
         starting_count = cfd.record_count
         cfd.add_daily_record
         cfd.write
+        first_rev = cfd["rows"][-1]["value"]["_rev"]
+        cfd.add_daily_record
+        cfd.write
         cfd2 = CFDData.new(CFDCouchIO.new('devspect'))
-        cfd2.record_count.should == starting_count + 1
+        cfd2["rows"][-1]["value"]["_rev"].should_not == first_rev
       end
     end
 

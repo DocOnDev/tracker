@@ -12,7 +12,7 @@ class VelocityCouchIO
   def load
     vel = {}
     @db = CouchRest.database(@end_point)
-    vel = @db.view('points/velocity')["rows"]
+    vel = @db.view('points/velocity')
     vel
   end
 
@@ -21,12 +21,14 @@ class VelocityCouchIO
     begin
       doc = @db.get(doc_id)
     rescue
-      doc = {"_id" => doc_id, "type" => "velocity", "project" => @db_name}
+      doc = CouchRest::Document.new("_id" => doc_id, "type" => "velocity", "project" => @db_name)
+      @db.save_doc(doc)
+      doc = @db.get(doc_id)
     end
 
     doc["date"] = vel.keys.last.split("-").map(&:to_i)
     doc["points"] = vel.values.last
-    @db.save_doc(doc)
+    doc.save
   end
 
 end
