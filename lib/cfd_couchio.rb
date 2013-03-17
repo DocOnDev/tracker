@@ -17,10 +17,18 @@ class CFDCouchIO
   end
 
   def put(cfd)
-    new_record = {"_id" => "cfd-#{cfd.keys.last}", "type" => "cfd", "project" => @db_name}
-    new_record["date"] = cfd.keys.last.split("-").map(&:to_i)
-    new_record["points"] = cfd.values.last
-    @db.save_doc(new_record)
+    doc_id = "cfd-#{cfd.keys.last}"
+    begin
+      doc = @db.get(doc_id)
+    rescue
+      doc = CouchRest::Document.new("_id" => doc_id, "type" => "cfd", "project" => @db_name)
+      @db.save_doc(doc)
+      doc = @db.get(doc_id)
+    end
+
+    doc["date"] = cfd.keys.last.split("-").map(&:to_i)
+    doc["points"] = cfd.values.last
+    doc.save
   end
 
 end

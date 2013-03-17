@@ -2,7 +2,8 @@ require 'bundler/setup'
 load 'lib/tracker_reader.rb'
 load 'lib/cfd_data.rb'
 load 'lib/cfd_couchio.rb'
-#load 'lib/velocity_data.rb'
+load 'lib/velocity_data.rb'
+load 'lib/velocity_couchio.rb'
 
 def report_stories(stories, label)
   p "#{label}: #{stories.count} / #{stories.points}"

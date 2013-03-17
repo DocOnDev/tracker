@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'chronic'
 require 'velocity_data'
 require 'velocity_fileio'
 require 'velocity_couchio'
@@ -46,7 +47,7 @@ describe VelocityData do
       it 'should record total points and count for today' do
         velocity.update_current_velocity
         velocity.record_count.should == 5
-        velocity["velocity-#{@iteration_date}"][:points].should_not be_nil
+        velocity[@iteration_date].should_not be_nil
       end
     end
 
@@ -62,5 +63,16 @@ describe VelocityData do
         end
       end
     end
+
+    describe 'write data to couch' do
+      it 'should write or update a record' do
+        starting_count = velocity.record_count
+        velocity.update_current_velocity
+        velocity.write
+        velocity2 = VelocityData.new(VelocityCouchIO.new('devspect'))
+        velocity2.record_count.should be > 1
+      end
+    end
+
   end
 end
