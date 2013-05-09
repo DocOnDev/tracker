@@ -21,13 +21,17 @@ def run_stats
   hit_live 707539, nil, ["Doc Norton"]
   save_data "devspect", nil
   p "===================================="
-  p "Personalize/HeartX"
-  hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
-  save_data "personalization", ["heartx", "my profile", "personal_collections"]
-  p "===================================="
+  #p "Personalize/HeartX"
+  #hit_live 52897, ["heartx", "my profile", "personal_collections"], ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao", "Jason Felice"]
+  #save_data "personalization", ["heartx", "my profile", "personal_collections"]
+  #p "===================================="
   p "Personalize"
-  hit_live 52897, nil, ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao"]
+  hit_live 52897, nil, ["Kofi Appiah", "Dan Gilbert", "Jeff Long", "Kevin Tao", "Jason Felice"]
   save_data "personalize", nil
+  p "===================================="
+  p "MegaMind"
+  hit_live 313781, nil, ["Pete Prokopowicz", "Varun Loiwal"]
+  save_data "megamind", nil
   p "===================================="
   p "Pull"
   hit_live 614999, nil, ["Darby Frey", "Ruslan Gilfanov", "Ben Haley", "Ryan Kinderman", "Sean Massa", "Keith Norman", "Ben Reinhart", "Sean White"]
@@ -68,6 +72,14 @@ def run_stats
   p "Quantum Lead"
   hit_live 584807, nil, ["Mike Busch", "Kris Urie", "Bob Beaty", "Darek Pasciak", "Matt", "Gary Fredericks", "Denny Abraham", "Jeremy Neander"]
   save_data "quantum_lead", nil
+  p "===================================="
+  p "Coffee"
+  hit_live 500037, nil, ["Sergey Varaksin", "Dmitrii Abramov", "Shelby King"]
+  save_data "coffee", nil
+  p "===================================="
+  p "Optimize Platform"
+  hit_live 386283, nil, ["Dave Moore", "Patrick Gombert", "Anthony Caliendo", "Blake Smith"]
+  save_data "optimize_platform", nil
   p "===================================="
 end
 
