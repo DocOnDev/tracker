@@ -13,13 +13,12 @@ def load_projects
   project_details = Hash.new
   project_details["Pretty Face"] = {"tracker" => 727223, "labels" => nil, "database" => "pretty_face"}
   project_details["DevSpect"] = {"tracker" => 707539, "labels" => nil, "database" => "devspect"}
-  project_details["Personalize"] = {"tracker" => 52897, "labels" => nil, "database" => "personalize"}
+  project_details["Gaslight"] = {"tracker" => 52897, "labels" => nil, "database" => "personalize"}
+  project_details["HomePage"] = {"tracker" => 906212, "labels" => nil, "database" => "homepage"}
   project_details["MegaMind"] = {"tracker" => 313781, "labels" => nil, "database" => "megamind"}
   project_details["Pull"] = {"tracker" => 614999, "labels" => nil, "database" => "pull"}
-  project_details["Pull/I-Tier"] = {"tracker" => 614999, "labels" => ["i-tier"], "database" => "pull_itier"}
   project_details["Breadcrumb"] = {"tracker" => 567623, "labels" => nil, "database" => "breadcrumb"}
   project_details["Humor"] = {"tracker" => 578505, "labels" => nil, "database" => "humor"}
-  # project_details["Reserve"] = {"tracker" => 725097, "labels" => nil, "database" => "reserve"}
   project_details["Deal Estate"] = {"tracker" => 126097, "labels" => nil, "database" => "deal_estate"}
   project_details["Deal With It"] = {"tracker" => 358255, "labels" => nil, "database" => "deal_with_it"}
   project_details["Deal Wizard"] = {"tracker" => 547815, "labels" => nil, "database" => "deal_wizard"}
