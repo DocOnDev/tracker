@@ -1,9 +1,19 @@
 class StoryCollection
-  def initialize story_hash
-    @story_hash = story_hash
+  include Enumerable
+
+  def initialize
+    @stories = []
+  end
+
+  def << (story)
+    @stories << story
+  end
+
+  def [] (index)
+    @stories[index]
   end
 
   def story_count
-    @story_hash.length
+    @stories.length
   end
 end
