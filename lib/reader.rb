@@ -1,4 +1,6 @@
 require 'json'
+require 'transformer'
+require 'story_collection'
 
 class Reader
   def initialize file_name

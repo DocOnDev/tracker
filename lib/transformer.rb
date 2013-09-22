@@ -1,5 +1,5 @@
 class Transformer
   def self.transform story_hash
-    StoryCollection.new
+    collection = StoryCollection.new(story_hash)
   end
 end
