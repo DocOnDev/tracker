@@ -12,6 +12,7 @@ class Transformer
       story.creator = _s["requested_by_id"].to_s
       story.created = _s["created_at"]
       story.size = _s["estimate"].to_s
+      story.url = _s["url"]
       collection << story
     end
     collection

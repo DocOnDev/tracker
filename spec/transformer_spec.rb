@@ -17,7 +17,10 @@ describe Transformer do
     end
 
     context 'with json that is not empty' do
-      before(:all) { @stories = Transformer.transform(JSON.parse(File.read("features/support/tracker_data.json"))) }
+      before(:all) do
+        @stories = Transformer.transform(JSON.parse(File.read("features/support/tracker_data.json")))
+        @story = @stories[0]
+      end
 
       it 'has a story count greater than 0' do
         @stories.story_count.should > 0 
@@ -27,8 +30,7 @@ describe Transformer do
         @stories[0].should be_kind_of(Story)
       end
 
-      context 'and has the required fields' do
-        before(:all) { @story = @stories[0] }
+      context 'has the required fields' do
         it 'name' do
           @story.name.should_not be_empty
         end
@@ -57,6 +59,12 @@ describe Transformer do
 
         it 'size' do
           @story.size.should_not be_empty
+        end
+      end
+
+      context 'has the optional fields' do
+        it 'url' do
+          @story.url.should_not be_empty
         end
       end
     end

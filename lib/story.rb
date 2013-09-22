@@ -1,5 +1,5 @@
 class Story
-  attr_accessor :name, :status, :updated, :type, :creator, :created, :size
+  attr_accessor :name, :status, :updated, :type, :creator, :created, :size, :url
 
   def created_date
     DateTime.new(@created).strftime('%F %T')
