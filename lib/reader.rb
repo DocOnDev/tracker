@@ -8,7 +8,7 @@ class Reader
   def read
     content = File.read(@file_name)
     data = JSON.parse(content) rescue data = {}
-    return data if valid_content?(data)
+    return Transformer.transform(data) if valid_content?(data)
     raise "Invalid File Format"
   end
 
@@ -18,3 +18,4 @@ class Reader
     data.length > 0 && data[0]["kind"] == "story"
   end
 end
+

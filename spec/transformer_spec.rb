@@ -1,20 +1,15 @@
 require 'transformer'
 require 'json'
+require 'story_collection'
 
 describe Transformer do
 
-  describe "#transform" do
-    it "raises a No data received error when there is no json" do
-      transformer = Transformer.new
-      lambda { transformer.transform "" }.should raise_error("No data received")
-    end
+  let(:story_hash) { JSON.parse("[]") }
 
-    it "returns an empty story collection when the json is empty" do
-      # transformer = Transformer.new
-      # result = transformer.transform JSON.parse("[]")
-      # result.should be_kind_of Stories
-    end
-   
+  describe "#transform", :focus => true do
+   it 'returns a story collection' do
+     Transformer.transform(story_hash).should be_kind_of(StoryCollection)
+   end
   end
 
 end
