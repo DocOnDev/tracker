@@ -1,0 +1,76 @@
+[
+{
+  "updated_at": 1377604800000,
+    "project_id": 99,
+    "current_state": "started",
+    "url": "http://localhost/story/show/560",
+    "name": "Tractor beam loses power intermittently",
+    "story_type": "bug",
+    "requested_by_id": 102,
+    "created_at": 1377604800000,
+    "kind": "story",
+    "id": 560,
+    "labels":
+      [
+      ]
+},
+{
+  "updated_at": 1377604800000,
+  "project_id": 99,
+  "current_state": "delivered",
+  "url": "http://localhost/story/show/565",
+  "name": "Repair CommLink",
+  "story_type": "chore",
+  "description": "It's malfunctioning.",
+  "requested_by_id": 104,
+  "created_at": 1377604800000,
+  "kind": "story",
+  "id": 565,
+  "labels":
+    [
+    {
+      "updated_at": 1377604800000,
+      "project_id": 99,
+      "name": "mnt",
+      "created_at": 1377604800000,
+      "kind": "label",
+      "id": 2010
+    }
+  ]
+},
+{
+  "updated_at": 1377604800000,
+  "project_id": 99,
+  "current_state": "finished",
+  "url": "http://localhost/story/show/552",
+  "name": "Battlestation fully operational",
+  "story_type": "release",
+  "description": "Everything is proceeding as I have foreseen.",
+  "requested_by_id": 100,
+  "deadline": 1377604805000,
+  "created_at": 1377604800000,
+  "kind": "story",
+  "id": 552,
+  "labels":
+    [
+    ]
+},
+{
+  "updated_at": 1377604800000,
+  "project_id": 99,
+  "current_state": "unstarted",
+  "url": "http://localhost/story/show/555",
+  "name": "Bring me the passengers",
+  "story_type": "feature",
+  "description": "ignore the droids",
+  "requested_by_id": 101,
+  "created_at": 1377604800000,
+  "kind": "story",
+  "estimate": 2,
+  "id": 555,
+  "labels":
+    [
+    ]
+}
+]
+
