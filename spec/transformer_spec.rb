@@ -97,14 +97,20 @@ describe Transformer do
       end
 
       context 'has the optional fields' do
-        it 'url' do
-          @first_story.url.should_not be_empty
+        describe 'url' do
+          it 'is not empty' do
+            @first_story.url.should_not be_empty
+          end
         end
 
-        it 'owner' do
-          @first_story.owner.should_not be_nil
-          @first_story.owner.should_not be_empty
-          @first_story.owner.should be_kind_of(String)
+        describe 'owner' do
+          it 'is not empty' do
+            @first_story.owner.should_not be_empty
+          end
+
+          it 'is a string' do
+            @first_story.owner.should be_kind_of(String)
+          end
         end
       end
     end
