@@ -27,5 +27,5 @@ Then /^the result should include four elements$/ do
 end
 
 Then /^the first element should be a story$/ do
-  @tracker_data[0]["type"].should be "Story"
+  @tracker_data[0].should be_kind_of(Story) 
 end
