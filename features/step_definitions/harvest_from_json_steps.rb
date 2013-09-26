@@ -23,9 +23,9 @@ When /^I read that file$/ do
 end
 
 Then /^the result should include four elements$/ do
-  @tracker_data.length.should be 4
+  @tracker_data.story_count.should be 4
 end
 
 Then /^the first element should be a story$/ do
-  @tracker_data[0]["type"].should be "Story"
+  @tracker_data[0].should be_kind_of(Story) 
 end
