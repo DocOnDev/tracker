@@ -73,22 +73,5 @@
     [
     ]
 },
-{
-  "updated_at": 1377604800000,
-  "project_id": 99,
-  "current_state": "unstarted",
-  "url": "http://localhost/story/show/555",
-  "name": "Bring me the passengers",
-  "story_type": "feature",
-  "description": "ignore the droids",
-  "requested_by_id": 101,
-  "created_at": 1377604800000,
-  "kind": "story",
-  "estimate": 2,
-  "id": 555,
-  "labels":
-    [
-    ]
-}
 ]
 
