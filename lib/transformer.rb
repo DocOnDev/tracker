@@ -5,6 +5,7 @@ class Transformer
     collection = StoryCollection.new
     story_hash.each do |_s|
       story = Story.new
+      # These elements exist on all stories
       story.name = _s["name"]
       story.status = _s["current_state"]
       story.updated = _s["updated_at"]
@@ -12,7 +13,10 @@ class Transformer
       story.creator = _s["requested_by_id"].to_s
       story.created = _s["created_at"]
       story.size = _s["estimate"].to_s
-      story.url = _s["url"]
+
+      # These elements do not exist on all stories
+      story.url = _s["url"] ? _s["url"] : ""
+      story.owner = _s["owned_by_id"] ? _s["owned_by_id"].to_s : ""
       collection << story
     end
     collection
