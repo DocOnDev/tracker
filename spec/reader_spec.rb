@@ -5,7 +5,7 @@ describe Reader do
     let(:missing_file) { 'file_not_found.json' }
     let(:default_person_file) {'features/support/person_data.json'}
     let(:empty_json_file) { 'features/support/empty.json' }
-    let(:bogus_tracker_file) {'features/support/bogus_tracker.json'}
+    let(:bogus_file) {'features/support/bogus_tracker.json'}
     let(:valid_tracker_file) {'features/support/tracker_data.json'}
 
     describe 'story file' do
@@ -16,12 +16,12 @@ describe Reader do
 
       it 'should raise an error when file is empty' do
         reader = Reader.new(empty_json_file, default_person_file)
-        lambda { reader.read }.should raise_error("Invalid File Format")
+        lambda { reader.read }.should raise_error("Invalid Story File Format")
       end
 
       it 'should raise an error when file format is not correct' do
-        reader = Reader.new(bogus_tracker_file, default_person_file)
-        lambda { reader.read }.should raise_error("Invalid File Format")
+        reader = Reader.new(bogus_file, default_person_file)
+        lambda { reader.read }.should raise_error("Invalid Story File Format")
       end
 
       it 'should have tracker stories if the file format is correct' do
@@ -40,6 +40,11 @@ describe Reader do
 
       it 'should raise an error when file is empty' do
         reader = Reader.new(valid_tracker_file, empty_json_file)
+        lambda { reader.read }.should raise_error("Invalid Person File Format")
+      end
+
+      it 'should raise an error when file format is not correct' do
+        reader = Reader.new(valid_tracker_file, bogus_file)
         lambda { reader.read }.should raise_error("Invalid Person File Format")
       end
     end
