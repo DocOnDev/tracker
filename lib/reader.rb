@@ -3,14 +3,14 @@ require 'transformer'
 require 'story_collection'
 
 class Reader
-  def initialize file_name
-    @file_name = file_name
+  def initialize story_file_name
+    @file_name = story_file_name
   end
 
   def read
     content = File.read(@file_name)
-    data = JSON.parse(content) rescue data = {}
-    return Transformer.transform(data) if valid_content?(data)
+    story_data = JSON.parse(content) rescue story_data = {}
+    return Transformer.transform(story_data) if valid_content?(story_data)
     raise "Invalid File Format"
   end
 
