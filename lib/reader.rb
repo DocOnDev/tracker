@@ -1,5 +1,5 @@
 require 'json'
-require 'transformer'
+require 'from_pivotal_transformer'
 require 'story_collection'
 require 'story_file_reader'
 require 'person_file_reader'
@@ -21,7 +21,7 @@ class Reader
     story_data = @story_file_reader.read_data
     person_data = @person_file_reader.read_data
 
-    return Transformer.transform(story_data, person_data)
+    return FromPivotalTransformer.transform(story_data, person_data)
   end
 
 end

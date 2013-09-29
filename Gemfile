@@ -6,10 +6,11 @@ gem 'couchrest'
 gem 'chronic'
 
 group :development do
-    gem 'rspec'
-    gem 'guard-rspec'
-    gem 'guard-cucumber'
-    gem 'rb-fsevent', '~> 0.9.1'
-    gem 'terminal-notifier-guard'
-    gem 'cucumber'
+  gem 'factory_girl'
+  gem 'rspec'
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'rb-fsevent', '~> 0.9.1'
+  gem 'terminal-notifier-guard'
+  gem 'cucumber'
 end

@@ -1,6 +1,6 @@
 require 'story'
 
-class Transformer
+class FromPivotalTransformer
   def self.transform story_hash, person_hash=Hash.new
     collection = StoryCollection.new
 
