@@ -12,6 +12,7 @@ describe Writer, :focus => true do
   end
 
   it 'should append to a file when the file already exists' do
+    File.open(EXISTING_FILE, "w+") { |f| f.puts('stuff') } if !File.exists?(EXISTING_FILE)
     start_size = File.size(EXISTING_FILE)
     writer = Writer.new(EXISTING_FILE)
     writer.write
