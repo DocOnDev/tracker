@@ -7,6 +7,7 @@ describe Reader do
     let(:empty_file) { 'features/support/empty.json' }
     let(:bogus_file) {'features/support/bogus_tracker.json'}
     let(:story_file) {'features/support/story_data.json'}
+    let(:bogus_config_file) {'features/support/bogus.yml'}
 
     describe '#initialize' do
       it 'sets a default for story file' do
@@ -30,6 +31,26 @@ describe Reader do
 
       it 'uses the hash to set the person file' do
         reader = Reader.new({:person_file => missing_file})
+        reader.person_file.should == missing_file
+      end
+
+      it 'uses config file to set story file' do
+        reader = Reader.new({:config_file => bogus_config_file})
+        reader.story_file.should == bogus_file
+      end
+
+      it 'uses config file to set person file' do
+        reader = Reader.new({:config_file => bogus_config_file})
+        reader.person_file.should == bogus_file
+      end
+
+      it 'gives precedence to specified story file' do
+        reader = Reader.new({:config_file => bogus_config_file, :story_file => missing_file})
+        reader.story_file.should == missing_file
+      end
+
+      it 'gives precedence to specified person file' do
+        reader = Reader.new({:config_file => bogus_config_file, :person_file => missing_file})
         reader.person_file.should == missing_file
       end
     end

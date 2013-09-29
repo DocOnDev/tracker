@@ -5,11 +5,15 @@ require 'story_collection'
 class Reader
   STORY_FILE='features/support/story_data.json'
   PERSON_FILE='features/support/person_data.json'
+  CONFIG_FILE='features/support/config.yml'
+
   attr_reader :story_file, :person_file
 
   def initialize options = {}
-    @story_file = options[:story_file] || STORY_FILE
-    @person_file = options[:person_file] || PERSON_FILE
+    config_file = options[:config_file] || CONFIG_FILE
+    config = config_file ? YAML::load(File.open(config_file)) : {}
+    @story_file = options[:story_file] || config['story_file'] || STORY_FILE
+    @person_file = options[:person_file] || config['person_file'] || PERSON_FILE
   end
 
   def read
