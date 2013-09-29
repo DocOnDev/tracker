@@ -17,27 +17,27 @@ class Reader
   end
 
   def read
-    content = File.read(@story_file)
-    story_data = JSON.parse(content) rescue story_data = {}
+    story_content = File.read(@story_file)
+    story_data = JSON.parse(story_content) rescue story_data = {}
 
     person_content = File.read(@person_file)
     person_data = JSON.parse(person_content) rescue person_data = {}
 
-    if !valid_person_content?(person_data)
+    if !valid_person_data?(person_data)
       raise "Invalid Person File Format"
     end
 
-    return Transformer.transform(story_data) if valid_story_content?(story_data)
+    return Transformer.transform(story_data) if valid_story_data?(story_data)
     raise "Invalid Story File Format"
   end
 
   private
 
-  def valid_person_content? data
+  def valid_person_data? data
     data.length > 0 && data[0]["kind"] == "project_membership"
   end
 
-  def valid_story_content? data
+  def valid_story_data? data
     data.length > 0 && data[0]["kind"] == "story"
   end
 end
