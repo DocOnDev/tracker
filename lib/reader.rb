@@ -1,48 +1,28 @@
 require 'json'
 require 'transformer'
 require 'story_collection'
+require 'story_file_reader'
+require 'person_file_reader'
 
 class Reader
-  STORY_FILE='features/support/story_data.json'
-  PERSON_FILE='features/support/person_data.json'
   CONFIG_FILE='features/support/config.yml'
 
-  attr_reader :story_file, :person_file
+  attr_reader :person_file
 
   def initialize options = {}
     config_file = options[:config_file] || CONFIG_FILE
     config = config_file ? YAML::load(File.open(config_file)) : {}
-    @story_file = options[:story_file] || config['story_file'] || STORY_FILE
-    @person_file = options[:person_file] || config['person_file'] || PERSON_FILE
+    @person_file_reader = PersonFileReader.new(config)
+    @story_file_reader = StoryFileReader.new(config)
   end
 
   def read
-    story_content = File.read(@story_file)
-    story_data = JSON.parse(story_content) rescue story_data = {}
 
-    person_content = File.read(@person_file)
-    person_data = JSON.parse(person_content) rescue person_data = {}
+    story_data = @story_file_reader.read_data
+    person_data = @person_file_reader.read_data
 
-    if !valid_person_data?(person_data)
-      raise "Invalid Person File Format"
-    end
-
-    return Transformer.transform(story_data) if valid_story_data?(story_data)
-    raise "Invalid Story File Format"
+    return Transformer.transform(story_data, person_data)
   end
 
-  private
-
-  def valid_person_data? data
-    valid_data_of_type? data, "project_membership"
-  end
-
-  def valid_story_data? data
-    valid_data_of_type? data, "story"
-  end
-
-  def valid_data_of_type? data, type
-    data.length >0 && data[0]["kind"] == type
-  end
 end
 
