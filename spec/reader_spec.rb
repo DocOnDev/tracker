@@ -20,38 +20,38 @@ describe Reader do
       end
 
       it 'accepts a hash parameter' do
-        lambda {reader = Reader.new(missing_file, missing_file, {:story_file => missing_file, :person_file => person_file})}.should_not raise_error
+        lambda {reader = Reader.new({:story_file => missing_file, :person_file => person_file})}.should_not raise_error
       end
 
       it 'uses the hash to set the story file' do
-        reader = Reader.new(bogus_file, bogus_file, {:story_file => missing_file})
+        reader = Reader.new({:story_file => missing_file})
         reader.story_file.should == missing_file
       end
 
       it 'uses the hash to set the person file' do
-        reader = Reader.new(bogus_file, bogus_file, {:person_file => missing_file})
+        reader = Reader.new({:person_file => missing_file})
         reader.person_file.should == missing_file
       end
     end
 
     describe 'story file' do
       it 'raises a file not found error when file does not exist' do
-        reader = Reader.new(missing_file, person_file)
+        reader = Reader.new({:story_file => missing_file})
         lambda { reader.read }.should raise_error("No such file or directory - file_not_found.json")
       end
 
       it 'raises an error when file is empty' do
-        reader = Reader.new(empty_file, person_file)
+        reader = Reader.new({:story_file => empty_file})
         lambda { reader.read }.should raise_error("Invalid Story File Format")
       end
 
       it 'raises an error when file format is not correct' do
-        reader = Reader.new(bogus_file, person_file)
+        reader = Reader.new({:story_file => bogus_file})
         lambda { reader.read }.should raise_error("Invalid Story File Format")
       end
 
       it 'should have tracker stories if the file format is correct' do
-        reader = Reader.new(story_file, person_file)
+        reader = Reader.new()
         data = reader.read
         data.story_count > 0
       end
@@ -60,22 +60,22 @@ describe Reader do
 
     describe 'person file' do
       it 'raises a file not found error when file does not exist' do
-        reader = Reader.new(story_file, missing_file)
+        reader = Reader.new({:person_file => missing_file})
         lambda { reader.read }.should raise_error("No such file or directory - file_not_found.json")
       end
 
       it 'raises an error when file is empty' do
-        reader = Reader.new(story_file, empty_file)
+        reader = Reader.new({:person_file => empty_file})
         lambda { reader.read }.should raise_error("Invalid Person File Format")
       end
 
       it 'raises an error when file format is not correct' do
-        reader = Reader.new(story_file, bogus_file)
+        reader = Reader.new({:person_file => bogus_file})
         lambda { reader.read }.should raise_error("Invalid Person File Format")
       end
 
       it 'should have people if the file format is correct' do
-        reader = Reader.new(story_file, person_file)
+        reader = Reader.new()
         data = reader.read
         p data[0].owner
 
