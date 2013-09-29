@@ -3,20 +3,33 @@ require 'transformer'
 require 'story_collection'
 
 class Reader
-  def initialize file_name
-    @file_name = file_name
+  def initialize story_file_name, person_file_name='features/support/person_data.json'
+    @story_file_name = story_file_name
+    @person_file_name = person_file_name
   end
 
   def read
-    content = File.read(@file_name)
-    data = JSON.parse(content) rescue data = {}
-    return Transformer.transform(data) if valid_content?(data)
-    raise "Invalid File Format"
+    content = File.read(@story_file_name)
+    story_data = JSON.parse(content) rescue story_data = {}
+
+    person_content = File.read(@person_file_name)
+    person_data = JSON.parse(person_content) rescue person_data = {}
+
+    if !valid_person_content?(person_data)
+      raise "Invalid Person File Format"
+    end
+
+    return Transformer.transform(story_data) if valid_story_content?(story_data)
+    raise "Invalid Story File Format"
   end
 
   private
 
-  def valid_content? data
+  def valid_person_content? data
+    data.length > 0 && data[0]["kind"] == "project_membership"
+  end
+
+  def valid_story_content? data
     data.length > 0 && data[0]["kind"] == "story"
   end
 end
