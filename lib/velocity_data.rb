@@ -12,7 +12,7 @@ class VelocityData
     @velocity = io.load
   end
 
-  def write(file_name=@file_name)
+  def write(file_name=@story_file_name)
     @io.put(@velocity)
   end
 

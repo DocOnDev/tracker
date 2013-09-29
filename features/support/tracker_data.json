@@ -64,7 +64,7 @@
   "name": "Battlestation fully operational",
   "story_type": "release",
   "description": "Everything is proceeding as I have foreseen.",
-  "requested_by_id": 100,
+  "requested_by_id": 104,
   "deadline": 1377604805000,
   "created_at": 1377604800000,
   "kind": "story",
