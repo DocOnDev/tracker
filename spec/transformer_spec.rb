@@ -17,8 +17,9 @@ describe Transformer do
     end
 
     context 'with json that is not empty' do
+      let(:people_hash) { JSON.parse(File.read('features/support/person_data.json'))}
       before(:all) do
-        @stories = Transformer.transform(JSON.parse(File.read("features/support/tracker_data.json")))
+        @stories = Transformer.transform(JSON.parse(File.read("features/support/one_story_data.json")),people_hash)
         @first_story = @stories[0]
       end
 
