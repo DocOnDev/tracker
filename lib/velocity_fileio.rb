@@ -1,11 +1,11 @@
 class VelocityFileIO
   def initialize(file_name='velocity.json')
-    @story_file_name = file_name
+    @file_name = file_name
   end
 
   def load
     cfd = {}
-    cfd = JSON.parse(IO.read(@story_file_name)) if File.exists?(@story_file_name)
+    cfd = JSON.parse(IO.read(@file_name)) if File.exists?(@file_name)
     cfd
   end
 
