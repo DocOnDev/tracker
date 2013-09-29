@@ -34,11 +34,15 @@ class Reader
   private
 
   def valid_person_data? data
-    data.length > 0 && data[0]["kind"] == "project_membership"
+    valid_data_of_type? data, "project_membership"
   end
 
   def valid_story_data? data
-    data.length > 0 && data[0]["kind"] == "story"
+    valid_data_of_type? data, "story"
+  end
+
+  def valid_data_of_type? data, type
+    data.length >0 && data[0]["kind"] == type
   end
 end
 
