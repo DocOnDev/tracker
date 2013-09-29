@@ -3,6 +3,7 @@ require 'story'
 class Transformer
   def self.transform story_hash, person_hash=Hash.new
     collection = StoryCollection.new
+
     story_hash.each do |_s|
       story = Story.new
       # These elements exist on all stories
