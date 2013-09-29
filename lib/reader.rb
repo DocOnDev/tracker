@@ -3,16 +3,18 @@ require 'transformer'
 require 'story_collection'
 
 class Reader
-  def initialize story_file_name, person_file_name='features/support/person_data.json'
-    @story_file_name = story_file_name
-    @person_file_name = person_file_name
+  attr_reader :story_file, :person_file
+
+  def initialize story_file='features/support/story_data.json', person_file='features/support/person_data.json', options = {}
+    @story_file = options[:story_file] || story_file
+    @person_file = options[:person_file] || person_file
   end
 
   def read
-    content = File.read(@story_file_name)
+    content = File.read(@story_file)
     story_data = JSON.parse(content) rescue story_data = {}
 
-    person_content = File.read(@person_file_name)
+    person_content = File.read(@person_file)
     person_data = JSON.parse(person_content) rescue person_data = {}
 
     if !valid_person_content?(person_data)
