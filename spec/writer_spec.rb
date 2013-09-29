@@ -1,10 +1,21 @@
 require 'writer'
 
-describe Writer do
+NEW_FILE = 'features/support/new_file.json'
+EXISTING_FILE = 'features/support/existing_file.json'
+
+describe Writer, :focus => true do
   it 'should create a new file when the file does not exist' do
-    File.delete('new_file.json') if File.exist?('new_file.json')
-    writer = Writer.new('new_file.json')
+    File.delete(NEW_FILE) if File.exist?(NEW_FILE)
+    writer = Writer.new(NEW_FILE)
     writer.write
-    File.exist?('new_file.json').should == true
+    File.exist?(NEW_FILE).should == true
   end
+
+  it 'should append to a file when the file already exists' do
+    start_size = File.size(EXISTING_FILE)
+    writer = Writer.new(EXISTING_FILE)
+    writer.write
+    File.size(EXISTING_FILE).should be > start_size
+  end
+
 end

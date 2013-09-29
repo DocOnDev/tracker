@@ -4,6 +4,6 @@ class Writer
   end
 
   def write
-    File.open(@out_file, "w") { |file| file.write("This is the new file") }
+    File.open(@out_file, "a") { |file| file.puts("This is some file content.  ") }
   end
 end
