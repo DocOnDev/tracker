@@ -3,7 +3,7 @@ require 'transformer'
 require 'story_collection'
 
 class Reader
-  def initialize story_file_name, person_file_name
+  def initialize story_file_name, person_file_name='features/support/person_data.json'
     @story_file_name = story_file_name
     @person_file_name = person_file_name
   end

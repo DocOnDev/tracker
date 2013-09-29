@@ -47,6 +47,14 @@ describe Reader do
         reader = Reader.new(valid_tracker_file, bogus_file)
         lambda { reader.read }.should raise_error("Invalid Person File Format")
       end
+
+      it 'should have people if the file format is correct' do
+        reader = Reader.new(valid_tracker_file, default_person_file)
+        data = reader.read
+        p data[0].owner
+
+        data[0].owner.should_not match /\d+/
+      end
     end
   end
 end
