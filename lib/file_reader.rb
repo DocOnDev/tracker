@@ -4,7 +4,7 @@ require 'story_collection'
 require 'story_file_reader'
 require 'person_file_reader'
 
-class Reader
+class FileReader
   CONFIG_FILE='features/support/config.yml'
 
   attr_reader :person_file
