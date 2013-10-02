@@ -1,22 +1,28 @@
 require 'pivotal_reader'
 
 describe PivotalReader, :focus => true do
+  OTHER_PROJECT = 70752
+  let(:other_project_reader) { PivotalReader.new( {:pivotal_project => OTHER_PROJECT} ) }
+  let(:default_reader) { PivotalReader.new }
+
   describe '#initialize' do
     it 'accepts a hash parameter' do
-      lambda { reader = PivotalReader.new( {:pivotal_project => 70752} ) }.should_not raise_error
+      lambda { reader = PivotalReader.new( {:pivotal_project => OTHER_PROJECT} ) }.should_not raise_error
     end
 
     it 'sets a default pivotal project' do
-      reader = PivotalReader.new
-      reader.pivotal_project.should == 707539
+      default_reader.pivotal_project.should == 707539
     end
 
     it 'overrides the default pivotal project from hash' do
-      reader = PivotalReader.new({:pivotal_project => 70752})
-      reader.pivotal_project.should == 70752
+      other_project_reader.pivotal_project.should == OTHER_PROJECT
     end
 
-    it 'sets use_ssl based on a hash paramter' do
+    it 'defaults to a secure connection' do
+      default_reader.should be_secure
+    end
+
+    it 'sets secure connection based on a hash parameter' do
       reader = PivotalReader.new({:use_ssl => false})
       reader.should_not be_secure
     end
