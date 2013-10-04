@@ -28,4 +28,17 @@ describe PivotalReader, :focus => true do
     end
   end
 
+  describe '#read' do
+    context 'returns data' do
+      it 'has at least one story' do
+        data = default_reader.read
+        data.story_count.should > 0
+      end
+
+      it 'has owner data' do
+        data = default_reader.read
+        data[0].owner.should_not match /\d+/
+      end
+    end
+  end
 end

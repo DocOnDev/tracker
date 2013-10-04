@@ -18,7 +18,7 @@ describe FileReader do
     it 'should have tracker stories if the file format is correct' do
       reader = FileReader.new()
       data   = reader.read
-      data.story_count > 0
+      data.story_count.should > 0
     end
   end
 

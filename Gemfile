@@ -4,6 +4,7 @@ gem 'pivotal-tracker', :git => 'git://github.com/DocOnDev/pivotal-tracker.git'
 gem 'json'
 gem 'couchrest'
 gem 'chronic'
+gem 'typhoeus'
 
 group :development do
   gem 'factory_girl'
