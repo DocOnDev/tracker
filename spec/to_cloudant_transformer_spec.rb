@@ -34,6 +34,7 @@ describe ToCloudantTransformer do
       it "returns one story back" do
         one_story_transform_result.count.should > 0
       end
+
       it "returns the correct story name" do
         one_story_transform_result[0]["name"].should be 
       end
