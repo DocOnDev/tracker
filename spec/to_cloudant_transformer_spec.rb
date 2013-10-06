@@ -14,7 +14,7 @@ describe ToCloudantTransformer do
         transformer.transform empty_story_collection
       end
 
-      it "returns a hash" do
+      it "returns the proper type" do
         empty_transform_result.should be_kind_of(Array)
       end
 
