@@ -23,25 +23,19 @@ describe ToCloudantTransformer do
       end
     end
     context "one story collection" do
-      
-      it "returns one story back" do
+      let(:one_story_collection) do
         stories = StoryCollection.new
         first_story = Story.new
         first_story.name = "name"
-
         stories << first_story
-        story_array = transformer.transform stories
+      end 
+      let(:one_story_transform_result) { transformer.transform one_story_collection }
 
-        story_array.count.should > 0
+      it "returns one story back" do
+        one_story_transform_result.count.should > 0
       end
       it "returns the correct story name" do
-        stories = StoryCollection.new
-        first_story = Story.new
-        first_story.name = "name"
-
-        stories << first_story
-        story_array = transformer.transform stories
-        story_array[0]["name"].should be 
+        one_story_transform_result[0]["name"].should be 
       end
     end
   end
