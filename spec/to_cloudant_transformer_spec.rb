@@ -28,6 +28,7 @@ describe ToCloudantTransformer do
         story.name = "initial name"
         story.status = "ACCEPTED"
         story.url = "http://myurl.com/#"
+        story.type = "STORY"
         story
       end
       let(:one_story_collection) do
@@ -35,21 +36,29 @@ describe ToCloudantTransformer do
         stories << default_story
       end 
       let(:one_story_transform_result) { transformer.transform one_story_collection }
+      let(:first_result) { one_story_transform_result[0] }
 
-      it "returns one story back" do
-        one_story_transform_result.count.should > 0
-      end
+      context "returns the correct" do
 
-      it "returns the correct story name" do
-        one_story_transform_result[0]["name"].should be default_story.name
-      end
+        it "story count" do
+          one_story_transform_result.count.should > 0
+        end
 
-      it "returns the correct status" do
-        one_story_transform_result[0]["status"].should be default_story.status
-      end
+        it "name" do
+          first_result["name"].should be default_story.name
+        end
 
-      it "returns the correct url" do
-        one_story_transform_result[0]["url"].should be default_story.url
+        it "status" do
+          first_result["status"].should be default_story.status
+        end
+
+        it "url" do
+          first_result["url"].should be default_story.url
+        end
+
+        it "type" do
+          first_result["type"].should be default_story.type
+        end
       end
     end
   end

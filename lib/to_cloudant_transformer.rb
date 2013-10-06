@@ -6,6 +6,7 @@ class ToCloudantTransformer
       story_hash["name"] = story.name
       story_hash["status"] = story.status
       story_hash["url"] = story.url
+      story_hash["type"] = story.type
       stories << story_hash
     end
     return stories
