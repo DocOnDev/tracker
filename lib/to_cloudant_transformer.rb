@@ -1,9 +1,14 @@
 class ToCloudantTransformer
   def transform collection
-    story_hash = Hash.new
+    stories = Array.new
     collection.each do |story|
-      story_hash[story.name] = story
+      story_hash = Hash.new
+      story_hash["name"] = story.name
+      story_hash["status"] = story.status
+      story_hash["url"] = story.url
+      story_hash["type"] = story.type
+      stories << story_hash
     end
-    return story_hash
+    return stories
   end
 end

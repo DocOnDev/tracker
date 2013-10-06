@@ -7,7 +7,7 @@ class Writer
   end
 
   def write collection = {}
-    @transformer.transform collection
-    File.open(@out_file, "a") { |file| file.write(collection.to_json) }
+    result = @transformer.transform collection
+    File.open(@out_file, "w") { |file| file.write(result.to_json) }
   end
 end
