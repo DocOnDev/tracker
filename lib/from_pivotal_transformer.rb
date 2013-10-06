@@ -1,8 +1,11 @@
 require 'story'
 
 class FromPivotalTransformer
-  def self.transform story_hash, person_hash=Hash.new
+  def self.transform options={}
     collection = StoryCollection.new
+
+    story_hash = options[:stories] || {}
+    person_hash = options[:people] || {}
 
     story_hash.each do |_s|
       story = Story.new
