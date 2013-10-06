@@ -23,11 +23,14 @@ describe ToCloudantTransformer do
       end
     end
     context "one story collection" do
+      let(:default_story) do
+        story = Story.new
+        story.name = "initial name"
+        story
+      end
       let(:one_story_collection) do
         stories = StoryCollection.new
-        first_story = Story.new
-        first_story.name = "name"
-        stories << first_story
+        stories << default_story
       end 
       let(:one_story_transform_result) { transformer.transform one_story_collection }
 
@@ -36,8 +39,12 @@ describe ToCloudantTransformer do
       end
 
       it "returns the correct story name" do
-        one_story_transform_result[0]["name"].should be 
+        one_story_transform_result[0]["name"].should be default_story.name
       end
+
+      #it "returns the correct status" do
+      #  one_story_transform_result[0]["status"].should be default_story.status
+      #end
     end
   end
 end
