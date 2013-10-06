@@ -12,19 +12,33 @@ describe ToCloudantTransformer do
 
       it "returns a hash" do
         transformer = ToCloudantTransformer.new
-        story_hash = transformer.transform StoryCollection.new
+        story_array = transformer.transform StoryCollection.new
 
-        story_hash.should be_kind_of(Hash)
+        story_array.should be_kind_of(Array)
       end
     end
     context "one story collection" do
+      
       it "returns one story back" do
         transformer = ToCloudantTransformer.new
         stories = StoryCollection.new
-        stories << Story.new
-        story_hash = transformer.transform stories
+        first_story = Story.new
+        first_story.name = "name"
 
-        story_hash.count.should > 0
+        stories << first_story
+        story_array = transformer.transform stories
+
+        story_array.count.should > 0
+      end
+      it "returns the correct story name" do
+        transformer = ToCloudantTransformer.new
+        stories = StoryCollection.new
+        first_story = Story.new
+        first_story.name = "name"
+
+        stories << first_story
+        story_array = transformer.transform stories
+        story_array[0]["name"].should be 
       end
     end
   end
