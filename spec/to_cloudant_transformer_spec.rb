@@ -4,23 +4,28 @@ require 'story'
 
 describe ToCloudantTransformer do
   describe "#transform", :focus => true do
+    let(:transformer) { ToCloudantTransformer.new }
+
     context "empty story collection" do
+      let(:empty_story_collection) { StoryCollection.new }
+      
       it "accepts a story collection" do
-        transformer = ToCloudantTransformer.new
-        transformer.transform StoryCollection.new
+        transformer.transform empty_story_collection
       end
 
       it "returns a hash" do
-        transformer = ToCloudantTransformer.new
-        story_array = transformer.transform StoryCollection.new
-
+        story_array = transformer.transform empty_story_collection
         story_array.should be_kind_of(Array)
+      end
+
+      it "returns a length of 0" do
+        story_array = transformer.transform empty_story_collection
+        story_array.count.should be 0
       end
     end
     context "one story collection" do
       
       it "returns one story back" do
-        transformer = ToCloudantTransformer.new
         stories = StoryCollection.new
         first_story = Story.new
         first_story.name = "name"
@@ -31,7 +36,6 @@ describe ToCloudantTransformer do
         story_array.count.should > 0
       end
       it "returns the correct story name" do
-        transformer = ToCloudantTransformer.new
         stories = StoryCollection.new
         first_story = Story.new
         first_story.name = "name"
