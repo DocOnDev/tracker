@@ -1,4 +1,4 @@
-require 'writer'
+require 'file_writer'
 require 'factory_girl'
 require 'story_collection'
 require 'story'
@@ -12,11 +12,11 @@ def remove_file name
   File.delete(name) if File.exist?(name)
 end
 
-describe Writer, :focus => true do
+describe FileWriter, :focus => true do
   describe '#write' do
     it 'should create a new file when the file does not exist' do
       remove_file NEW_FILE
-      writer = Writer.new(NEW_FILE)
+      writer = FileWriter.new(NEW_FILE)
       writer.write
       File.exist?(NEW_FILE).should == true
     end
@@ -30,7 +30,7 @@ describe Writer, :focus => true do
     end
 
     it 'accepts a story collection' do
-      writer = Writer.new(EXISTING_FILE)
+      writer = FileWriter.new(EXISTING_FILE)
       story_collection = StoryCollection.new
 
       writer.write story_collection
@@ -38,7 +38,7 @@ describe Writer, :focus => true do
 
     it 'uses the transformer' do
       transformer_mock = double(ToCloudantTransformer)
-      writer = Writer.new(EXISTING_FILE, transformer_mock)
+      writer = FileWriter.new(EXISTING_FILE, transformer_mock)
 
       transformer_mock.should_receive(:transform)
 
