@@ -9,10 +9,11 @@ class PivotalReader
   PIVOTAL_ENDPOINT = "https://www.pivotaltracker.com/services/v5/projects/"
   APP_KEY = 'f03476629f1319b3e68d4d0a47011d6f'
 
-  attr_accessor :pivotal_project
+  attr_accessor :pivotal_project, :pivotal_key
 
   def initialize options = {}
-    raise 'Tracker key is Required' if !options[:pivotal_key]
+    # raise 'Tracker key is Required' if !options[:pivotal_key]
+    @pivotal_key = options[:pivotal_key] || APP_KEY
     @pivotal_project = options[:pivotal_project] || DEVSPECT_PROJECT
     @use_ssl = options[:use_ssl].nil? ? true : options[:use_ssl]
   end
@@ -33,7 +34,7 @@ class PivotalReader
   def call_pivotal data_type
     request = Typhoeus::Request.new(
         "#{PIVOTAL_ENDPOINT}#{@pivotal_project}/#{data_type}",
-        { :headers => {'X-TrackerToken' => APP_KEY } }
+        { :headers => {'X-TrackerToken' => @pivotal_key } }
     )
 
     request.on_complete do | response |
