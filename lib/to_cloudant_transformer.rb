@@ -5,6 +5,7 @@ class ToCloudantTransformer
       story_hash = Hash.new
       story_hash["name"] = story.name
       story_hash["status"] = story.status
+      story_hash["url"] = story.url
       stories << story_hash
     end
     return stories

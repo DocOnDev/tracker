@@ -27,6 +27,7 @@ describe ToCloudantTransformer do
         story = Story.new
         story.name = "initial name"
         story.status = "ACCEPTED"
+        story.url = "http://myurl.com/#"
         story
       end
       let(:one_story_collection) do
@@ -45,6 +46,10 @@ describe ToCloudantTransformer do
 
       it "returns the correct status" do
         one_story_transform_result[0]["status"].should be default_story.status
+      end
+
+      it "returns the correct url" do
+        one_story_transform_result[0]["url"].should be default_story.url
       end
     end
   end
