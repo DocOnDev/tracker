@@ -1,6 +1,6 @@
 require 'to_cloudant_transformer'
 
-class Writer
+class FileWriter
   def initialize out_file, transformer=ToCloudantTransformer.new
     @out_file = out_file
     @transformer = transformer
