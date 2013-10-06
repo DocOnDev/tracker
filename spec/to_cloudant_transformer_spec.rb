@@ -8,19 +8,18 @@ describe ToCloudantTransformer do
 
     context "empty story collection" do
       let(:empty_story_collection) { StoryCollection.new }
-      
+      let(:empty_transform_result) { transformer.transform empty_story_collection }
+
       it "accepts a story collection" do
         transformer.transform empty_story_collection
       end
 
       it "returns a hash" do
-        story_array = transformer.transform empty_story_collection
-        story_array.should be_kind_of(Array)
+        empty_transform_result.should be_kind_of(Array)
       end
 
       it "returns a length of 0" do
-        story_array = transformer.transform empty_story_collection
-        story_array.count.should be 0
+        empty_transform_result.count.should be 0
       end
     end
     context "one story collection" do
