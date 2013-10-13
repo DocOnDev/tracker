@@ -1,0 +1,77 @@
+[
+{
+  "owned_by_id": 484595,
+    "updated_at": 1379879132000,
+    "created_at": 1379798560000,
+    "project_id": 99,
+    "name": "Harvester harvests project data from a json file",
+    "description": "Project to harvest is passed in via command line\n\n[project].json is name of file to read from\n\n\n*name: Story Name\n*status: Story Status\n*updated: Story last updated date\nurl: Story URL\n* type: Story Type (story, bug)\n*creator: Name of story creator/requestor\nowner: Name of person assigned\n*created: Story created date\ndue: Story due date\n* size: Story estimate/size (string)\ncompleted: Story completion date\n",
+    "estimate": 2,
+    "kind": "story",
+    "requested_by_id": 484595,
+    "url": "https://www.pivotaltracker.com/story/show/57439510",
+    "current_state": "started",
+    "id": 57439510,
+    "labels": [
+
+      ],
+    "story_type": "feature"
+},
+{
+  "updated_at": 1377604800000,
+    "project_id": 99,
+    "current_state": "started",
+    "url": "http://localhost/story/show/560",
+    "name": "Tractor beam loses power intermittently",
+    "story_type": "bug",
+    "requested_by_id": 102,
+    "created_at": 1377604800000,
+    "kind": "story",
+    "id": 560,
+    "labels":
+      [
+      ]
+},
+{
+  "updated_at": 1377604800000,
+  "project_id": 99,
+  "current_state": "delivered",
+  "url": "http://localhost/story/show/565",
+  "name": "Repair CommLink",
+  "story_type": "chore",
+  "description": "It's malfunctioning.",
+  "requested_by_id": 104,
+  "created_at": 1377604800000,
+  "kind": "story",
+  "id": 565,
+  "labels":
+    [
+    {
+      "updated_at": 1377604800000,
+      "project_id": 99,
+      "name": "mnt",
+      "created_at": 1377604800000,
+      "kind": "label",
+      "id": 2010
+    }
+  ]
+},
+{
+  "updated_at": 1377604800000,
+  "project_id": 99,
+  "current_state": "finished",
+  "url": "http://localhost/story/show/552",
+  "name": "Battlestation fully operational",
+  "story_type": "release",
+  "description": "Everything is proceeding as I have foreseen.",
+  "requested_by_id": 104,
+  "deadline": 1377604805000,
+  "created_at": 1377604800000,
+  "kind": "story",
+  "id": 552,
+  "labels":
+    [
+    ]
+}
+]
+

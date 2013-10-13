@@ -1,3 +1,4 @@
+pivotal-tracker
 pivotal-tracker/*
 *.swp
 *.swo
@@ -16,6 +17,9 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+.idea
+features/support/existing_file.json
+features/support/new_file.json
 
 temp.json
 
