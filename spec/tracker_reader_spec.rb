@@ -11,16 +11,16 @@ describe TrackerReader do
     strs[2] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "heartX", :current_state => "finished", :story_type => "Feature", :estimate => 3)
     strs[3] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "blocked", :current_state => "unstarted", :story_type => "Release", :estimate => 3)
 
-    prj = mock(PivotalTracker::Project)
+    prj = double(PivotalTracker::Project)
     prj.stub_chain(:stories, :all).and_return(strs)
     prj.stub_chain(:id).and_return(52897)
     reader.project = prj
 
-    iter = mock(PivotalTracker::Iteration)
+    iter = double(PivotalTracker::Iteration)
     iter.stub_chain(:current, :stories).and_return(strs[0..1])
     iter.stub_chain(:current, :start).and_return(Chronic.parse('last monday'))
 
-    prior_iter = mock(PivotalTracker::Iteration)
+    prior_iter = double(PivotalTracker::Iteration)
     prior_iter.stub(:stories).and_return([strs[2]])
     prior_iter.stub(:start).and_return(Chronic.parse('last monday'))
     iter.stub_chain("done").and_return([prior_iter])

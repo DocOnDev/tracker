@@ -1,0 +1,51 @@
+[
+    {
+
+        "person": {
+            "email": "marek@sith.mil",
+            "name": "Galen Marek",
+            "id": 484595,
+            "username": "starkiller",
+            "kind": "person",
+            "initials": "GM"
+        },
+        "id": 484595,
+        "role": "member",
+        "kind": "project_membership",
+        "wants_comment_notification_emails": true,
+        "project_id": 99
+    }
+    ,
+    {
+
+        "person": {
+            "email": "james@dean.com",
+            "name": "James Dean",
+            "id": 104,
+            "username": "jdean",
+            "kind": "person",
+            "initials": "JD"
+        },
+        "id": 104,
+        "role": "member",
+        "kind": "project_membership",
+        "wants_comment_notification_emails": true,
+        "project_id": 99
+    }
+    ,
+    {
+        "person": {
+            "email": "john@doe.com",
+            "name": "John Doe",
+            "id": 102,
+            "username": "john",
+            "kind": "person",
+            "initials": "JD"
+        },
+        "id": 102,
+        "role": "member",
+        "kind": "project_membership",
+        "wants_comment_notification_emails": true,
+        "project_id": 99
+    }
+]

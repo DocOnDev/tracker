@@ -13,7 +13,6 @@ Feature: Velocity
     Given the labels "heartX" and "heartY" are specified
     Then the velocity includes both "heartX" and "heartY" stories
 
-  @focus
   Scenario: Working with local file
     Given a bogus file
     Then there are 0 velocity records
