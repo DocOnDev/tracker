@@ -1,10 +1,7 @@
 class Harvester
-  def initialize reader
-    @reader = reader
-  end
-
-  def retrieve_data
-    @reader.read
+  def harvest options
+    raise "Source Required" if !options[:source]
+    raise "Destination Required" if !options[:destination]
   end
 end
 
