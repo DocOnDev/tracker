@@ -5,7 +5,7 @@ describe Harvester do
   describe '#harvest', :focus => true do
     let(:harvester) { Harvester.new }
 
-    # Harvester reads from a source project and writes tranposed data to a repository
+    # Harvester reads from a source project and writes transposed data to a repository
     it "raises an error without a parameter" do
       lambda { harvester.harvest }.should raise_error
     end
