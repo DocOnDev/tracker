@@ -6,7 +6,7 @@ describe StoryFileReader do
   let(:bogus_file) { 'features/support/bogus_tracker.json' }
   let(:empty_file) { 'features/support/empty.json' }
 
-  describe "#initialize", :focus => true do
+  describe "#initialize" do
 
     describe '#initialize' do
       it 'accepts a hash parameter' do
@@ -30,7 +30,7 @@ describe StoryFileReader do
     end
   end
 
-  describe "#read", :focus => true do
+  describe "#read" do
     it 'raises a file not found error when file does not exist' do
       reader = StoryFileReader.new({ :story_file => missing_file })
       lambda { reader.read_data }.should raise_error("No such file or directory - file_not_found.json")

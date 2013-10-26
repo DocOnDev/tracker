@@ -2,7 +2,7 @@ require 'harvester'
 require 'file_reader'
 
 describe Harvester do
-  describe '#harvest', :focus => true do
+  describe '#harvest' do
     let(:harvester) { Harvester.new }
 
     # Harvester reads from a source project and writes transposed data to a repository

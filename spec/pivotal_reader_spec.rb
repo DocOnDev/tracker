@@ -1,6 +1,6 @@
 require 'pivotal_reader'
 
-describe PivotalReader, :focus => true do
+describe PivotalReader do
   OTHER_PROJECT = 70752
   let(:other_project_reader) { PivotalReader.new( {:pivotal_project => OTHER_PROJECT} ) }
   let(:default_reader) { PivotalReader.new }

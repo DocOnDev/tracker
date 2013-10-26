@@ -4,7 +4,7 @@ require 'json'
 
 describe StoryCollection do
 
-  describe "accepts a story", :focus => true do
+  describe "accepts a story" do
     describe '#<<' do
       it "allows a story to be appended to the collection" do
         stories = StoryCollection.new
