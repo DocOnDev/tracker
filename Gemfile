@@ -7,6 +7,8 @@ gem 'chronic'
 gem 'typhoeus'
 gem 'rake'
 
+gem 'simplecov', :require => false, :group => :test
+
 group :development do
   gem 'factory_girl'
   gem 'rspec'
