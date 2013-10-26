@@ -5,6 +5,7 @@ gem 'json'
 gem 'couchrest'
 gem 'chronic'
 gem 'typhoeus'
+gem 'rake'
 
 group :development do
   gem 'factory_girl'
