@@ -1,6 +1,6 @@
 require 'reader'
 
-describe Reader, :focus => true  do
+describe Reader  do
   describe ".create" do
     it "creates tracker reader by default" do
       Reader.create.should be_kind_of(TrackerReader)

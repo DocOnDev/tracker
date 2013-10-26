@@ -3,7 +3,7 @@ require 'story_collection'
 require 'story'
 
 describe ToCloudantTransformer do
-  describe "#transform", :focus => true do
+  describe "#transform" do
     let(:transformer) { ToCloudantTransformer.new }
 
     context "empty story collection" do

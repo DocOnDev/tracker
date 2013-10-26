@@ -21,7 +21,7 @@ class FileReader
     story_data = @story_file_reader.read_data
     person_data = @person_file_reader.read_data
 
-    return FromPivotalTransformer.transform(story_data, person_data)
+    return FromPivotalTransformer.transform({:stories => story_data, :people => person_data})
   end
 
 end

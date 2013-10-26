@@ -12,7 +12,7 @@ def remove_file name
   File.delete(name) if File.exist?(name)
 end
 
-describe Writer, :focus => true do
+describe Writer do
   describe '#write' do
     it 'should create a new file when the file does not exist' do
       remove_file NEW_FILE
