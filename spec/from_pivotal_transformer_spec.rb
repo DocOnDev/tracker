@@ -2,12 +2,12 @@ require 'from_pivotal_transformer'
 require 'json'
 require 'story_collection'
 
-describe FromPivotalTransformer do
+describe FromPivotalTransformer, :focus => true do
 
   let(:empty_hash) { JSON.parse("[]") }
   let(:empty_transform) { FromPivotalTransformer.transform() }
 
-  describe "#transform", :focus => true do
+  describe "#transform" do
     it 'accepts a parameter hash' do
       stories = FromPivotalTransformer.transform({:stories => empty_hash})
     end
@@ -21,9 +21,10 @@ describe FromPivotalTransformer do
     end
 
     context 'with json that is not empty' do
-      let(:people_hash) { JSON.parse(File.read('features/support/person_data.json'))}
-      let(:story_hash) {JSON.parse(File.read("features/support/one_story_data.json"))}
       before(:all) do
+        people_hash = JSON.parse(File.read('features/support/person_data.json'))
+        story_hash = JSON.parse(File.read("features/support/one_story_data.json"))
+
         @stories = FromPivotalTransformer.transform({:stories=>story_hash,:people=>people_hash})
         @first_story = @stories[0]
       end

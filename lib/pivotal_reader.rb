@@ -25,7 +25,7 @@ class PivotalReader
     stories = call_pivotal 'stories'
     members = call_pivotal 'memberships'
 
-    FromPivotalTransformer.transform(stories, members)
+    FromPivotalTransformer.transform({:stories => stories, :people => members})
   end
 
   private
