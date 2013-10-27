@@ -5,6 +5,7 @@ rvm:
 script:
   - bundle exec rspec spec
   - bundle exec cucumber
+  - bundle exec cane
 
 before_script:
   - "export DISPLAY=:99.0"

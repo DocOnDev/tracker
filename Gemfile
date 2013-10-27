@@ -5,7 +5,7 @@ gem 'json'
 gem 'couchrest'
 gem 'chronic'
 gem 'typhoeus'
-gem 'rake'
+gem 'metric_fu'
 
 gem 'simplecov', :require => false, :group => :test
 
