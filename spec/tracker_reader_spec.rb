@@ -1,7 +1,7 @@
 require 'chronic'
 require 'tracker_reader'
 
-describe TrackerReader do
+describe TrackerReader, :focus => true do
   let(:reader) { TrackerReader.new }
 
   before(:each) do
