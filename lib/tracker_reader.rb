@@ -157,14 +157,32 @@ class TrackerReader
     end
   end
 
-  def filter_stories
+  def clone_stories
     stories = fetch_project_stories
-    filtered_stories = stories.clone
-    # TODO: dry this up - make this into an each
-    filtered_stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
-    filtered_stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
-    filtered_stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
-    filtered_stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
+    stories.clone
+  end
+
+  def filter_owner stories
+    stories.keep_if{|story| should_keep?(@criteria[:owner], story.owned_by)}
+  end
+
+  def filter_state stories
+    stories.keep_if{|story| should_keep?(@criteria[:state], story.current_state)}
+  end
+
+  def filter_label stories
+    stories.keep_if{|story| should_keep?(@criteria[:label], story.labels)}
+  end
+
+  def filter_type stories
+    stories.keep_if{|story| should_keep?(@criteria[:type], story.story_type)}
+  end
+
+  def filter_stories
+    filtered_stories = filter_owner(clone_stories)
+    filtered_stories = filter_state(filtered_stories)
+    filtered_stories = filter_label(filtered_stories)
+    filtered_stories = filter_type(filtered_stories)
     @filtered = true
     filtered_stories
   end
