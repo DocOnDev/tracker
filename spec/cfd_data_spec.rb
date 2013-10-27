@@ -82,7 +82,7 @@ describe CFDData do
       end
     end
 
-    describe 'write data to couch' do
+    describe 'write data to couch', :focus => true do
       it 'should update record for today' do
         starting_count = cfd.record_count
         cfd.add_daily_record
