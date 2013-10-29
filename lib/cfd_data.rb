@@ -1,3 +1,6 @@
+#
+# Writes a daily record to CFD Data
+#
 class CFDData
   $LOAD_PATH << './lib'
   require 'json'
@@ -12,7 +15,7 @@ class CFDData
     @cfd = io.load
   end
 
-  def write(file_name=@file_name)
+  def write
     @io.put(@cfd)
   end
 

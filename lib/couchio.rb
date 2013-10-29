@@ -1,3 +1,7 @@
+#
+# Reads/Writes data to couch data store
+# (currently coupled to cloudant)
+#
 require 'couchrest'
 CLOUDANT_USER = 'docondev' #'shalmordinfrosequeedderb'
 CLOUDANT_PASS = 'Agil3cloud' #'nSG4S4nqKYWiSJNSv3n6xM3M'
@@ -18,7 +22,17 @@ class CouchIO
   end
 
   def put(data)
-    doc_id = "#{@data_type}-#{data.keys.last}"
+    # TODO: Relying on last entry seems pretty brittle
+    record_date = data.keys.last
+    doc = load_document("#{@data_type}-#{record_date}")
+    doc["date"] = record_date.split("-").map(&:to_i)
+    doc["points"] = data.values.last
+    doc.save
+  end
+
+  private
+
+  def load_document(doc_id)
     begin
       doc = @db.get(doc_id)
     rescue
@@ -26,9 +40,7 @@ class CouchIO
       @db.save_doc(doc)
       doc = @db.get(doc_id)
     end
-
-    doc["date"] = data.keys.last.split("-").map(&:to_i)
-    doc["points"] = data.values.last
-    doc.save
+    doc
   end
+
 end
