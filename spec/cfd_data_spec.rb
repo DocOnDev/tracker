@@ -1,6 +1,6 @@
 require 'cfd_data'
 require 'cfd_fileio'
-require 'cfd_couchio'
+require 'couchio'
 
 describe CFDData do
   describe 'supports dependency injection' do
@@ -72,7 +72,7 @@ describe CFDData do
   end
 
   context 'working with couch' do
-    let(:cfd) {CFDData.new(CFDCouchIO.new('devspect'))}
+    let(:cfd) {CFDData.new(CouchIO.new('devspect', 'cfd'))}
 
     describe 'read data from couch' do
       context 'populated database' do
@@ -90,7 +90,7 @@ describe CFDData do
         first_rev = cfd["rows"][-1]["value"]["_rev"]
         cfd.add_daily_record
         cfd.write
-        cfd2 = CFDData.new(CFDCouchIO.new('devspect'))
+        cfd2 = CFDData.new(CouchIO.new('devspect', 'cfd'))
         cfd2["rows"][-1]["value"]["_rev"].should_not == first_rev
       end
     end

@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'chronic'
 require 'velocity_data'
 require 'velocity_fileio'
-require 'velocity_couchio'
+require 'couchio'
 
 describe VelocityData do
   before(:each) do
