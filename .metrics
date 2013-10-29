@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+MetricFu::Configuration.run do |config|
+#
+#   Configure Metrics
+#
+#   To configure individual metrics...
+#
+#   config.configure_metric(:rcov) do |rcov|
+#     rcov.enabled = true
+#     coverage_file = File.expand_path("coverage/rcov/rcov.txt", Dir.pwd)
+#     rcov.external = coverage_file
+#   end
+#
+#   Or, to configure a group of metrics...
+   config.configure_metrics.each do |metric|
+     if [:cane, :churn, :flay, :flog, :saikuro, :reek].include?(metric.name)
+       metric.enabled = true
+     else
+       metric.enabled = false
+     end
+   end
+#
+
+  config.configure_metric(:cane) do |cane|
+    cane.enabled = true
+    cane.abc_max = 15         # assignments, branches, conditionals
+    cane.line_length = 140
+    # cane.no_doc = 'y'       # accept classes with no doc
+    # cane.no_readme = 'y'    # accept project without README
+  end
+end
