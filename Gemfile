@@ -4,7 +4,7 @@ gem 'pivotal-tracker', :git => 'git://github.com/DocOnDev/pivotal-tracker.git'
 gem 'json'
 gem 'couchrest'
 gem 'chronic'
-gem 'typhoeus'
+gem 'typhoeus', "~> 0.6.5"
 gem 'metric_fu'
 
 gem 'simplecov', :require => false, :group => :test
