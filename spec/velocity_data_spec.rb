@@ -54,7 +54,7 @@ describe VelocityData do
   end
 
   context 'working with couch' do
-    let(:velocity) {VelocityData.new(VelocityCouchIO.new('devspect'))}
+    let(:velocity) {VelocityData.new(CouchIO.new('devspect', 'velocity'))}
 
     describe 'read data from couch' do
       context 'populated database' do
@@ -69,7 +69,7 @@ describe VelocityData do
         starting_count = velocity.record_count
         velocity.update_current_velocity
         velocity.write
-        velocity2 = VelocityData.new(VelocityCouchIO.new('devspect'))
+        velocity2 = VelocityData.new(CouchIO.new('devspect', 'velocity'))
         velocity2.record_count.should be > 1
       end
     end
