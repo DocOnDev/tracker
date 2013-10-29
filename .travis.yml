@@ -6,6 +6,7 @@ script:
   - bundle exec rspec spec
   - bundle exec cucumber
   - bundle exec cane
+  - bundle exec metric_fu
 
 before_script:
   - "export DISPLAY=:99.0"
