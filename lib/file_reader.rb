@@ -4,6 +4,10 @@ require 'story_collection'
 require 'story_file_reader'
 require 'person_file_reader'
 
+#
+# Reads data from both the person and story file, returning a single transformed object
+#
+
 class FileReader
   CONFIG_FILE='features/support/config.yml'
 
