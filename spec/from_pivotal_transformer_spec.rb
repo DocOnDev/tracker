@@ -30,7 +30,7 @@ describe FromPivotalTransformer, :focus => true do
       end
 
       it 'has a story count greater than 0' do
-        @stories.story_count.should > 0 
+        @stories.story_count.should > 0
       end
 
       it 'contains a story' do

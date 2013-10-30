@@ -6,10 +6,14 @@ describe TrackerReader, :focus => true do
 
   before(:each) do
     strs = Array.new(4)
-    strs[0] = PivotalTracker::Story.new(:owned_by => "Bob", :labels => "pwa,heartX", :current_state => "accepted", :story_type => "Feature", :estimate => 5)
-    strs[1] = PivotalTracker::Story.new(:owned_by => "Tom", :labels => nil, :current_state => "finished", :story_type => "Bug", :estimate => 3)
-    strs[2] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "heartX", :current_state => "finished", :story_type => "Feature", :estimate => 3)
-    strs[3] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "blocked", :current_state => "unstarted", :story_type => "Release", :estimate => 3)
+    strs[0] = PivotalTracker::Story.new(:owned_by => "Bob", :labels => "pwa,heartX",
+                                        :current_state => "accepted", :story_type => "Feature", :estimate => 5)
+    strs[1] = PivotalTracker::Story.new(:owned_by => "Tom", :labels => nil,
+                                        :current_state => "finished", :story_type => "Bug", :estimate => 3)
+    strs[2] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "heartX",
+                                        :current_state => "finished", :story_type => "Feature", :estimate => 3)
+    strs[3] = PivotalTracker::Story.new(:owned_by => "Doc", :labels => "blocked",
+                                        :current_state => "unstarted", :story_type => "Release", :estimate => 3)
 
     prj = double(PivotalTracker::Project)
     prj.stub_chain(:stories, :all).and_return(strs)

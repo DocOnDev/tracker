@@ -34,7 +34,7 @@ describe ToCloudantTransformer do
       let(:one_story_collection) do
         stories = StoryCollection.new
         stories << default_story
-      end 
+      end
       let(:one_story_transform_result) { transformer.transform one_story_collection }
       let(:first_result) { one_story_transform_result[0] }
 
