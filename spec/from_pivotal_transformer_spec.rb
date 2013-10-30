@@ -2,7 +2,7 @@ require 'from_pivotal_transformer'
 require 'json'
 require 'story_collection'
 
-describe FromPivotalTransformer do
+describe FromPivotalTransformer, :focus => true do
 
   let(:empty_hash) { JSON.parse("[]") }
   let(:empty_transform) { FromPivotalTransformer.transform() }
