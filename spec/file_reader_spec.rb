@@ -1,6 +1,6 @@
 require 'file_reader'
 
-describe FileReader do
+describe FileReader, :focus => true do
   let(:missing_file) { 'file_not_found.json' }
   let(:person_file) { 'features/support/person_data.json' }
   let(:empty_file) { 'features/support/empty.json' }
@@ -15,7 +15,7 @@ describe FileReader do
   end
 
   describe 'story file' do
-    it 'should have tracker stories if the file format is correct' do
+    it 'has tracker stories if the file format is correct' do
       reader = FileReader.new()
       data   = reader.read
       data.story_count.should > 0
@@ -23,7 +23,7 @@ describe FileReader do
   end
 
   describe 'people file' do
-    it 'should have people if the file format is correct' do
+    it 'has people if the file format is correct' do
       reader = FileReader.new()
       data   = reader.read
       data[0].owner.should_not match /\d+/

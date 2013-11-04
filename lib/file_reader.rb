@@ -1,4 +1,4 @@
-require 'json'
+require 'yaml'
 require 'from_pivotal_transformer'
 require 'story_collection'
 require 'story_file_reader'
@@ -15,13 +15,14 @@ class FileReader
 
   def initialize options = {}
     config_file = options[:config_file] || CONFIG_FILE
-    config = config_file ? YAML::load(File.open(config_file)) : {}
-    @person_file_reader = PersonFileReader.new(config)
-    @story_file_reader = StoryFileReader.new(config)
+    p_config = config_file ? YAML::load(File.open(config_file)) : {}
+    s_config = p_config.clone
+    @person_file_reader = PersonFileReader.new(p_config)
+    @story_file_reader = StoryFileReader.new(s_config)
   end
 
   def read
-
+    puts "Story File Reader File: #{@story_file_reader.story_file}"
     story_data = @story_file_reader.read_data
     person_data = @person_file_reader.read_data
 

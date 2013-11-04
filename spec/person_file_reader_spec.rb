@@ -1,6 +1,6 @@
 require 'person_file_reader'
 
-describe "PersonFileReader", :focus=> true do
+describe "PersonFileReader" do
   let(:missing_file) { 'file_not_found.json' }
   let(:person_file) {'features/support/person_data.json'}
   let(:empty_file) { 'features/support/empty.json' }

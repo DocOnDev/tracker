@@ -1,30 +1,20 @@
-require 'json'
+require 'json_file_reader'
 
 DEFAULT_PERSON_FILE='features/support/person_data.json'
 
 class PersonFileReader
-  attr_reader :person_file
-
   def initialize options = {}
-    @person_file = options[:person_file]|| DEFAULT_PERSON_FILE
+    options[:file] ||= options[:person_file] || DEFAULT_PERSON_FILE
+    options[:type] = "project_membership"
+    options[:description] = "person"
+    @json_reader = JSONFileReader.new(options)
+  end
+
+  def person_file
+    @json_reader.file
   end
 
   def read_data
-    person_content = File.read(@person_file)
-    person_data = JSON.parse(person_content) rescue person_data = {}
-
-    if !valid_story_data?(person_data)
-      raise "Invalid Person File Format"
-    end
-
-    person_data
-  end
-
-  def valid_story_data? data
-    valid_data_of_type? data, "project_membership"
-  end
-
-  def valid_data_of_type? data, type
-    data.length >0 && data[0]["kind"] == type
+    @json_reader.read_data
   end
 end
