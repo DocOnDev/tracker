@@ -1,11 +1,11 @@
-require 'tracker_reader'
+require 'pivotal_reader'
 require 'file_reader'
 
 class Reader
   def self.create type=:tracker, options={}
     case type
     when :tracker
-      return TrackerReader.new options
+      return PivotalReader.new options
     when :file
       return FileReader.new options
     else

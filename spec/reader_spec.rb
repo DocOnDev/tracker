@@ -3,7 +3,7 @@ require 'reader'
 describe Reader  do
   describe ".create" do
     it "creates tracker reader by default" do
-      Reader.create.should be_kind_of(TrackerReader)
+      Reader.create.should be_kind_of(PivotalReader)
     end
 
     it "creates file reader when specified" do
@@ -11,7 +11,7 @@ describe Reader  do
     end
 
     it "creates tracker reader when specified" do
-      Reader.create(:tracker).should be_kind_of(TrackerReader)
+      Reader.create(:tracker).should be_kind_of(PivotalReader)
     end
 
     it "uses options hash when specified" do
