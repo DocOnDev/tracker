@@ -19,5 +19,5 @@ When(/^I harvest the data$/) do
 end
 
 Then(/^I should have (\d+) stories$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+  pending # express the regexp above with the code you wish you had - touch
 end
